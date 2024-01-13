@@ -1,5 +1,14 @@
 package com.cavsteek.bookseller.service;
 
+import com.cavsteek.bookseller.model.Book;
+
+import java.util.List;
+
 public interface BookService {
 
+    Book saveBook(Book book);
+
+    void deleteBook(Long id);
+
+    List<Book> findAllBooks();
 }
