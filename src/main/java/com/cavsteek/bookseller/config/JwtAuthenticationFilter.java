@@ -1,6 +1,6 @@
 package com.cavsteek.bookseller.config;
 
-import com.cavsteek.bookseller.service.JWTService;
+import com.cavsteek.bookseller.jwt.JWTService;
 import com.cavsteek.bookseller.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

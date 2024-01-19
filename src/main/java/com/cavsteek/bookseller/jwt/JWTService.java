@@ -1,4 +1,4 @@
-package com.cavsteek.bookseller.service;
+package com.cavsteek.bookseller.jwt;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
