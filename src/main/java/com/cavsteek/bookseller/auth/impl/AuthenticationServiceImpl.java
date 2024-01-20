@@ -26,7 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JWTService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-    public User signUp(SignUpRequest signUpRequest, Role role){
+    public User signUp(SignUpRequest signUpRequest){
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setFirstName(signUpRequest.getFirstName());

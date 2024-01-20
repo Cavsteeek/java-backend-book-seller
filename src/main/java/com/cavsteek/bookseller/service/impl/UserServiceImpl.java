@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -32,6 +31,7 @@ public class UserServiceImpl implements UserService {
         };
     }
 
+    /*
     @Override
     public User saveUser(User user)
     {
@@ -41,10 +41,16 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+     */
 
     @Override
     public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean usernameExists(String username){
+        return userRepository.existsByUsername(username);
     }
 
     @Transactional

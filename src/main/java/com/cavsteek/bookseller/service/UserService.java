@@ -9,9 +9,11 @@ import java.util.Optional;
 public interface UserService {
     UserDetailsService userDetailsService();
 
-    User saveUser(User user);
+    //User saveUser(User user);
 
     Optional<User> findByUsername(String username);
+
+    boolean usernameExists(String username);
 
     void makeAdmin(String username);
 }
