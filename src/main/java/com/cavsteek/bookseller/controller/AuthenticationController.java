@@ -4,7 +4,6 @@ import com.cavsteek.bookseller.auth.AuthenticationService;
 import com.cavsteek.bookseller.dto.JwtAuthenticationResponse;
 import com.cavsteek.bookseller.dto.SignInRequest;
 import com.cavsteek.bookseller.dto.SignUpRequest;
-import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
