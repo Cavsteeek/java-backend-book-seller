@@ -19,6 +19,6 @@ public class UserController {
     public ResponseEntity<String> sayHello(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        return ResponseEntity.ok("Welcome User "+ username );
+        return ResponseEntity.ok("Welcome "+ username );
     }
 }
