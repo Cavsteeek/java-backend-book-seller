@@ -27,13 +27,19 @@ public class BookSellerApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User admin = new User();
-		admin.setUsername("Admin");
-		admin.setFirstName("Hober");
-		admin.setLastName("Malo");
-		admin.setRole(Role.ADMIN);
-		admin.setCreateTime(LocalDateTime.now());
-		admin.setPassword(new BCryptPasswordEncoder().encode("iadmin"));
-		userRepository.save(admin);
+		User adminAccount = userRepository.findByRole(Role.ADMIN);
+			if (null == adminAccount) {
+				User admin = new User();
+				admin.setUsername("Admin");
+				admin.setFirstName("Hober");
+				admin.setLastName("Malo");
+				admin.setRole(Role.ADMIN);
+				admin.setCreateTime(LocalDateTime.now());
+				admin.setPassword(new BCryptPasswordEncoder().encode("iadmin"));
+				userRepository.save(admin);
+				System.out.println("New admin created successfully!");
+			} else {
+				System.out.println("Admin with username 'Admin' already exists. Skipping creation.");
+			}
 	}
 }
