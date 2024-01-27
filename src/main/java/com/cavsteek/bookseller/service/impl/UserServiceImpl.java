@@ -44,10 +44,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByUsername(username);
     }
 
-    @Transactional
-    @Override
-    public void makeAdmin(String username)
-    {
-        userRepository.updateUserRole(username, Role.ADMIN);
-    }
 }

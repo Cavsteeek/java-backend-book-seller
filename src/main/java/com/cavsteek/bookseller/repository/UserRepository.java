@@ -20,9 +20,5 @@ public interface UserRepository extends JpaRepository<User,Long>
 
     boolean existsByUsername(String username);
 
-    @Modifying
-    @Query("update User set role = :role where username = :username")
-    void updateUserRole(@Param("username") String username, @Param("role")Role role);
-
 
 }

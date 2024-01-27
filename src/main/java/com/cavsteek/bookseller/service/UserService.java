@@ -16,5 +16,4 @@ public interface UserService {
 
     boolean usernameExists(String username);
 
-    void makeAdmin(String username);
 }
