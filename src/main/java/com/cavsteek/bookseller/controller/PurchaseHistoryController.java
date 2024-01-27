@@ -1,6 +1,7 @@
 package com.cavsteek.bookseller.controller;
 
 import com.cavsteek.bookseller.model.PurchaseHistory;
+import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.service.PurchaseHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class PurchaseHistoryController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<?> getAllPurchasesOfUser(@AuthenticationPrincipal UserDetails details){
-        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser(details.getId()));
+    public ResponseEntity<?> getAllPurchasesOfUser(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser(user.getId()));
     }
 }
