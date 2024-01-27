@@ -2,6 +2,7 @@ package com.cavsteek.bookseller.controller;
 
 import com.cavsteek.bookseller.auth.AuthenticationService;
 import com.cavsteek.bookseller.dto.JwtAuthenticationResponse;
+import com.cavsteek.bookseller.dto.RefreshTokenRequest;
 import com.cavsteek.bookseller.dto.SignInRequest;
 import com.cavsteek.bookseller.dto.SignUpRequest;
 import com.cavsteek.bookseller.service.UserService;
@@ -31,5 +32,10 @@ public class AuthenticationController {
     public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest signInRequest){
         JwtAuthenticationResponse user = service.signIn(signInRequest);
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest){
+        return ResponseEntity.ok (service.refreshToken(refreshTokenRequest));
     }
 }
