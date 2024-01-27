@@ -22,7 +22,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     }
 
     @Override
-    public List<PurchaseItem> findPurchasedItems(Long userId){
+    public List<PurchaseItem> findPurchasedItemsOfUser(Long userId){
         return purchaseHistoryRepository.findAllPurchasesOfUser(userId);
     }
 }

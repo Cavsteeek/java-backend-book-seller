@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 public interface UserService {
-    UserDetailsService userDetailsService();
 
     //User saveUser(User user);
 
-    Optional<User> findByUsername(String username);
+    //Optional<User> findByUsername(String username);
+
+    UserDetailsService userDetailsService();
 
     boolean usernameExists(String username);
 

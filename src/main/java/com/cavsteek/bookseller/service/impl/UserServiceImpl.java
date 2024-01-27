@@ -1,6 +1,5 @@
 package com.cavsteek.bookseller.service.impl;
 
-import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.model.Role;
 import com.cavsteek.bookseller.repository.UserRepository;
 import com.cavsteek.bookseller.service.UserService;
@@ -12,18 +11,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetailsService userDetailsService(){
-        return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return userRepository.findByUsername(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            }
+        };
     }
 
     /*
@@ -38,10 +40,10 @@ public class UserServiceImpl implements UserService {
     }
      */
 
-    @Override
+   /* @Override
     public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);
-    }
+    } */
 
     @Override
     public boolean usernameExists(String username){
