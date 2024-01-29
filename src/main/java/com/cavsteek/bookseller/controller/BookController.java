@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     private final BookService bookService;
 
-    @PostMapping("/add-book")
+    @PostMapping
     public ResponseEntity<?> saveBook(@RequestBody Book book){
         return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete-book/{bookId}")
+    @DeleteMapping
     public ResponseEntity<?> deleteBookById(@PathVariable Long bookId){
         bookService.deleteBook(bookId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-books")
+    @GetMapping
     public ResponseEntity<?> getAllBooks(){
         return new ResponseEntity<>(bookService.findAllBooks(), HttpStatus.OK);
     }
