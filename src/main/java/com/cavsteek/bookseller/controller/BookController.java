@@ -18,7 +18,7 @@ public class BookController {
         return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("{bookId")
     public ResponseEntity<?> deleteBookById(@PathVariable Long bookId){
         bookService.deleteBook(bookId);
         return new ResponseEntity<>(HttpStatus.OK);
