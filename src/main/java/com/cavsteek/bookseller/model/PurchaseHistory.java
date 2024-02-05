@@ -23,4 +23,14 @@ public class PurchaseHistory {
 
     @Column(name = "purchase_time", nullable = false)
     private LocalDateTime purchaseTime;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false, updatable = false, insertable = false)
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
+    private User user;
+
+
 }
