@@ -45,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public JwtAuthenticationResponse signIn(SignInRequest signInRequest) {
         try {
-            String usernameOrEmail = signInRequest.getUsername();
+            /*String usernameOrEmail = signInRequest.getUsername();
             boolean isEmail = isValidEmail(usernameOrEmail);
 
             User user_;
@@ -56,11 +56,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 user_ = userRepository.findByUsername(usernameOrEmail)
                         .orElseThrow(() -> new IllegalArgumentException("Invalid Username or Password"));
             }
-
+*/
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    user_.getUsername(),
+                    signInRequest.getUsername(),
                     signInRequest.getPassword()));
-            var user = userRepository.findByUsername(user_.getUsername())
+            var user = userRepository.findByUsername(signInRequest.getUsername())
                     .orElseThrow(
                             () -> new IllegalArgumentException("Invalid Username or Password")
                     );
