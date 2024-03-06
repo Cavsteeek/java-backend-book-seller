@@ -37,6 +37,7 @@ public class BookSellerApplication implements CommandLineRunner {
 				admin.setUsername("Admin");
 				admin.setFirstName("Hober");
 				admin.setLastName("Malo");
+				admin.setEmail("admin@gmail.com");
 				admin.setRole(Role.ADMIN);
 				admin.setCreateTime(LocalDateTime.now());
 				admin.setPassword(new BCryptPasswordEncoder().encode("iadmin"));

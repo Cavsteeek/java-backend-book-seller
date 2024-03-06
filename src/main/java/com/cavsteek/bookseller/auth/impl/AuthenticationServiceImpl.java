@@ -17,8 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.springframework.security.config.http.MatcherType.regex;
 
 @Service
 @RequiredArgsConstructor
@@ -42,44 +43,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       return userRepository.save(user);
     }
 
-    public static boolean isValidEmail(String email) {
-        String regex = "^[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+    public JwtAuthenticationResponse signIn(SignInRequest signInRequest) {
+        try {
+            String usernameOrEmail = signInRequest.getUsername();
+            boolean isEmail = isValidEmail(usernameOrEmail);
 
+            User user_;
+            if (isEmail) {
+                user_ = userRepository.findByEmail(usernameOrEmail)
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid Email or Password"));
+            } else {
+                user_ = userRepository.findByUsername(usernameOrEmail)
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid Username or Password"));
+            }
 
-    public JwtAuthenticationResponse signIn(SignInRequest signInRequest){
-        String usernameOrEmail = signInRequest.getUsername();
-        boolean isEmail = isValidEmail(usernameOrEmail);
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    user_.getUsername(),
+                    signInRequest.getPassword()));
+            var user = userRepository.findByUsername(user_.getUsername())
+                    .orElseThrow(
+                            () -> new IllegalArgumentException("Invalid Username or Password")
+                    );
+            var jwt = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
 
-        User user_;
-        if (isEmail) {
-            user_ = userRepository.findByEmail(usernameOrEmail)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid Email or Password"));
-        } else {
-            user_ = userRepository.findByUsername(usernameOrEmail)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid Username or Password"));
+            JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
+            jwtAuthenticationResponse.setToken(jwt);
+            jwtAuthenticationResponse.setRefreshToken(refreshToken);
+            return jwtAuthenticationResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("An error occurred during sign-in", e);
         }
-
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                signInRequest.getUsername(),
-                signInRequest.getPassword()));
-        var user = userRepository.findByUsername(signInRequest.getUsername())
-                .orElseThrow(
-                        () -> new IllegalArgumentException("Invalid Username or Password")
-                );
-        var jwt = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
-
-        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
-
-        jwtAuthenticationResponse.setToken(jwt);
-        jwtAuthenticationResponse.setRefreshToken(refreshToken);
-        return jwtAuthenticationResponse;
     }
-
     public JwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
         String userName = jwtService.extractUsername(refreshTokenRequest.getToken());
         User user = userRepository.findByUsername(userName).orElseThrow();
