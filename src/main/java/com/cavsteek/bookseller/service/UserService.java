@@ -14,6 +14,8 @@ public interface UserService {
 
     UserDetailsService userDetailsService();
 
+    Optional<User> findByEmail(String email);
+
     boolean usernameExists(String username);
 
 }

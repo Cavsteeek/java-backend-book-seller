@@ -1,6 +1,7 @@
 package com.cavsteek.bookseller.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +33,9 @@ public class User implements UserDetails {
 
     @Column(name = "firstName",nullable = false, length = 100)
     private String firstName;
+
+    @Email
+    private String email;
 
     @Column(name = "lastName", nullable = false, length = 100)
     private String lastName;

@@ -1,15 +1,14 @@
 package com.cavsteek.bookseller.service.impl;
 
-import com.cavsteek.bookseller.model.Role;
+import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.repository.UserRepository;
 import com.cavsteek.bookseller.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,10 +33,10 @@ public class UserServiceImpl implements UserService {
     }
      */
 
-   /* @Override
-    public Optional<User> findByUsername(String username){
-        return userRepository.findByUsername(username);
-    } */
+    @Override
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByUsername(email);
+    }
 
     @Override
     public boolean usernameExists(String username){

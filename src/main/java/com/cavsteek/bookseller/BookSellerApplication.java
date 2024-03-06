@@ -17,6 +17,8 @@ public class BookSellerApplication implements CommandLineRunner {
 
 	private final UserRepository userRepository;
 
+
+
 	public static void main(String[] args) {
 		try{
 			SpringApplication.run(BookSellerApplication.class, args);
@@ -24,6 +26,8 @@ public class BookSellerApplication implements CommandLineRunner {
 			e.printStackTrace();
 		}
 	}
+
+
 
 	@Override
 	public void run(String... args) throws Exception {

@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -31,16 +33,36 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setUsername(signUpRequest.getUsername());
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
+        user.setEmail(signUpRequest.getEmail());
         user.setRole(Role.USER);
         user.setCreateTime(LocalDateTime.now());
         user.setPassword(
                 passwordEncoder.encode(signUpRequest.getPassword())
         );
-
-        return userRepository.save(user);
+      return userRepository.save(user);
     }
 
+    public static boolean isValidEmail(String email) {
+        String regex = "^[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+
     public JwtAuthenticationResponse signIn(SignInRequest signInRequest){
+        String usernameOrEmail = signInRequest.getUsername();
+        boolean isEmail = isValidEmail(usernameOrEmail);
+
+        User user_;
+        if (isEmail) {
+            user_ = userRepository.findByEmail(usernameOrEmail)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid Email or Password"));
+        } else {
+            user_ = userRepository.findByUsername(usernameOrEmail)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid Username or Password"));
+        }
+
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 signInRequest.getUsername(),
                 signInRequest.getPassword()));
