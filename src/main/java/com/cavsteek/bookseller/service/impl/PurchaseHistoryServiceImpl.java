@@ -2,7 +2,6 @@ package com.cavsteek.bookseller.service.impl;
 
 import com.cavsteek.bookseller.model.PurchaseHistory;
 import com.cavsteek.bookseller.repository.PurchaseHistoryRepository;
-import com.cavsteek.bookseller.repository.projection.PurchaseItem;
 import com.cavsteek.bookseller.service.PurchaseHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,9 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     }
 
     @Override
-    public List<PurchaseItem> findPurchasedItemsOfUser(Long userId){
-        return purchaseHistoryRepository.findAllPurchasesOfUser(userId);
+    public List<PurchaseHistory> findPurchasedItemsOfUser(){
+        return purchaseHistoryRepository.findAllPurchases();
     }
+
+
 }

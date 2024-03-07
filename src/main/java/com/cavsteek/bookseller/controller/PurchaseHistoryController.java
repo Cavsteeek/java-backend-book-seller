@@ -23,6 +23,6 @@ public class PurchaseHistoryController {
 
     @GetMapping("/view")
     public ResponseEntity<?> getAllPurchasesOfUser(@AuthenticationPrincipal User user){
-        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser(user.getId()));
+        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser());
     }
 }
