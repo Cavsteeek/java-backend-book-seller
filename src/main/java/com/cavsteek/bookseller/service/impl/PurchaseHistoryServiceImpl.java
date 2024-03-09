@@ -20,10 +20,10 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         return purchaseHistoryRepository.save(purchaseHistory);
     }
 
-    @Override
-    public List<PurchaseHistory> findPurchasedItemsOfUser(){
-        return purchaseHistoryRepository.findAllPurchases();
-    }
+//    @Override
+//    public List<PurchaseHistory> findPurchasedItemsOfUser(){
+//        return purchaseHistoryRepository.findAllPurchases();
+//    }
 
 
 }

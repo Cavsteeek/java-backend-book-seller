@@ -8,5 +8,5 @@ import java.util.List;
 public interface PurchaseHistoryService {
     PurchaseHistory savePurchaseHistory(PurchaseHistory purchaseHistory);
 
-    List<PurchaseHistory> findPurchasedItemsOfUser();
+//    List<PurchaseHistory> findPurchasedItemsOfUser();
 }
