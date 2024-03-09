@@ -17,7 +17,8 @@ public interface UserService {
 
     Optional<User> findByEmail(String email);
 
-    List<GetUserResponse> findUsersByRole();
+
+    List<User> findUsersByRole();
 
     boolean usernameExists(String username);
 

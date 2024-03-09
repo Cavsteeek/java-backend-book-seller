@@ -20,7 +20,7 @@ public class AdminController {
 
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers(){
-        List<GetUserResponse> userList = userService.findUsersByRole();
+        List<User> userList = userService.findUsersByRole();
         return ResponseEntity.ok(userList);
     }
 }
