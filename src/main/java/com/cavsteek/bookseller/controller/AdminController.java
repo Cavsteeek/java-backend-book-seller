@@ -1,5 +1,6 @@
 package com.cavsteek.bookseller.controller;
 
+import com.cavsteek.bookseller.dto.GetUserResponse;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class AdminController {
 
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers(){
-        List<User> userList = userService.findUsersByRole();
+        List<GetUserResponse> userList = userService.findUsersByRole();
         return ResponseEntity.ok(userList);
     }
 }

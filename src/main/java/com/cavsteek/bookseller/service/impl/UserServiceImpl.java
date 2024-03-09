@@ -1,5 +1,6 @@
 package com.cavsteek.bookseller.service.impl;
 
+import com.cavsteek.bookseller.dto.GetUserResponse;
 import com.cavsteek.bookseller.model.Role;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +43,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsersByRole(){
-        return userRepository.findAllUsersByRole(Role.USER);
+    public List<GetUserResponse> findUsersByRole(){
+         List<User> userList = userRepository.findAllUsersByRole(Role.USER);
+        return userList.stream()
+                .map(user -> new GetUserResponse())
+                .collect(Collectors.toList());
     }
 
     @Override
