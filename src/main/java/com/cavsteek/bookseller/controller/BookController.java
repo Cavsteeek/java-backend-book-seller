@@ -15,17 +15,29 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<?> saveBook(@RequestBody Book book){
-        return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{bookId}")
     public ResponseEntity<?> deleteBookById(@PathVariable Long bookId){
-        bookService.deleteBook(bookId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            bookService.deleteBook(bookId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/view-all")
     public ResponseEntity<?> getAllBooks(){
-        return new ResponseEntity<>(bookService.findAllBooks(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(bookService.findAllBooks(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
