@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +30,11 @@ public class BookServiceImpl implements BookService {
     public List<Book> findAllBooks()
     {
         return bookRepository.findAll();
+    }
+
+    @Override
+    public boolean bookExists(String title, String description, String author, Double price){
+        return bookRepository.existsByTitleAndDescriptionAndAuthorAndPrice(title, description, author, price);
     }
 
    /* @Override

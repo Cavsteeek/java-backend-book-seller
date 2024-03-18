@@ -16,6 +16,9 @@ public class BookController {
     @PostMapping
     public ResponseEntity<?> saveBook(@RequestBody Book book){
         try {
+            if(bookService.bookExists(book.getTitle(),book.getDescription(),book.getAuthor(),book.getPrice())){
+                return ResponseEntity.badRequest().body("Book with these Details already exists");
+            }
             return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

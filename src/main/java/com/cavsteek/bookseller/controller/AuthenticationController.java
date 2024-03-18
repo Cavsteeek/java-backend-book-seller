@@ -7,6 +7,7 @@ import com.cavsteek.bookseller.dto.SignInRequest;
 import com.cavsteek.bookseller.dto.SignUpRequest;
 import com.cavsteek.bookseller.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +23,14 @@ public class AuthenticationController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest){
-        if(userService.usernameExists(signUpRequest.getUsername())){
-            return ResponseEntity.badRequest().body("User with this Username already exists");
+        try {
+            if (userService.usernameExists(signUpRequest.getUsername())) {
+                return ResponseEntity.badRequest().body("User with this Username already exists");
+            }
+            return ResponseEntity.ok(service.signUp(signUpRequest));
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return ResponseEntity.ok(service.signUp(signUpRequest));
     }
 
     @PostMapping("/sign-in")
