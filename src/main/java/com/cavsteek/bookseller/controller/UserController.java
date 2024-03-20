@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
-    // private final UserRepository userRepository;
+
     @GetMapping
     public ResponseEntity<String> sayHello(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

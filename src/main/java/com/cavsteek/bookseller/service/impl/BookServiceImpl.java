@@ -37,8 +37,4 @@ public class BookServiceImpl implements BookService {
         return bookRepository.existsByTitleAndDescriptionAndAuthorAndPrice(title, description, author, price);
     }
 
-   /* @Override
-    public Optional<Book> findBookById(){
-        return
-    }*/
 }

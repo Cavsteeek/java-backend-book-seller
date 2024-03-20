@@ -15,11 +15,12 @@ public interface UserService {
 
     UserDetailsService userDetailsService();
 
-    Optional<User> findByEmail(String email);
+    /*Optional<User> findByEmail(String email);*/
 
 
     List<User> findUsersByRole();
 
     boolean usernameExists(String username);
 
+    void deleteUser(Long id);
 }
