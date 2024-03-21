@@ -13,4 +13,6 @@ public interface BookService {
     List<Book> findAllBooks();
 
     boolean bookExists(String title, String description, String author, Double price);
+
+    void updateBook(Book book, Long id);
 }

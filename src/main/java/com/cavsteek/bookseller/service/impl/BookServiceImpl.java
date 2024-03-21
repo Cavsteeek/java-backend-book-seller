@@ -37,4 +37,10 @@ public class BookServiceImpl implements BookService {
         return bookRepository.existsByTitleAndDescriptionAndAuthorAndPrice(title, description, author, price);
     }
 
+    @Override
+    public void updateBook(Book book, Long id)
+    {
+        bookRepository.save(book);
+    }
+
 }
