@@ -40,6 +40,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void updateBook(Book book, Long id)
     {
+        book.setCreateTime(LocalDateTime.now());
         bookRepository.save(book);
     }
 
