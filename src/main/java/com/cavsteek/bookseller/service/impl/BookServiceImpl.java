@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,8 +41,18 @@ public class BookServiceImpl implements BookService {
     @Override
     public void updateBook(Book book, Long id)
     {
-        book.setCreateTime(LocalDateTime.now());
-        bookRepository.save(book);
+        Optional<Book> book_ = bookRepository.findById(id);
+        if (book_.isPresent()) {
+            Book existingBook = book_.get();
+            existingBook.setTitle(book.getTitle());
+            existingBook.setDescription(book.getDescription());
+            existingBook.setAuthor(book.getAuthor());
+            existingBook.setPrice(book.getPrice());
+
+            bookRepository.save(existingBook);
+        } else {
+            throw new RuntimeException("Book not found with id: " + id);
+        }
     }
 
 }
