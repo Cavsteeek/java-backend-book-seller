@@ -45,7 +45,7 @@ public class BookController {
     }
 
     @PutMapping("/update/{bookId}")
-    public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable Long id){
+    public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
         try{
             bookService.updateBook(book,id);
             return ResponseEntity.ok("Book Updated Successfully");
