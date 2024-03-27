@@ -7,5 +7,6 @@ import lombok.Data;
 //@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public class JwtAuthenticationResponse {
     private String token;
+    private String role;
     private String refreshToken;
 }
