@@ -50,10 +50,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             () -> new IllegalArgumentException("Invalid Username or Password")
                     );
             var jwt = jwtService.generateToken(user);
+            var username = jwtService.extractUsername(jwt);
             var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
 
             JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
             jwtAuthenticationResponse.setToken(jwt);
+            jwtAuthenticationResponse.setUsername(username);
             jwtAuthenticationResponse.setRole(user.getRole().toString());
             jwtAuthenticationResponse.setRefreshToken(refreshToken);
             return jwtAuthenticationResponse;
