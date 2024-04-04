@@ -44,16 +44,6 @@ public class BookController {
         }
     }
 
-    @PutMapping("/update/{bookId}")
-    public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
-        try{
-            bookService.updateBook(book,id);
-            return ResponseEntity.ok("Book Updated Successfully");
-        }catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PatchMapping("/update-book/{bookId}")
     public ResponseEntity<?> patchupdateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
         try{

@@ -39,23 +39,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(Book book, Long id)
-    {
-        Optional<Book> book_ = bookRepository.findById(id);
-        if (book_.isPresent()) {
-            Book existingBook = book_.get();
-            existingBook.setTitle(book.getTitle());
-            existingBook.setDescription(book.getDescription());
-            existingBook.setAuthor(book.getAuthor());
-            existingBook.setPrice(book.getPrice());
-
+    public void patchBook(Long id, Book bookPatch) {
+        Optional<Book> optionalBook = bookRepository.findById(id);
+        if (optionalBook.isPresent()) {
+            Book existingBook = optionalBook.get();
+            if (bookPatch.getTitle() != null) {
+                existingBook.setTitle(bookPatch.getTitle());
+            }
+            if (bookPatch.getDescription() != null) {
+                existingBook.setDescription(bookPatch.getDescription());
+            }
+            if (bookPatch.getAuthor() != null) {
+                existingBook.setAuthor(bookPatch.getAuthor());
+            }
+            if (bookPatch.getPrice() != null) {
+                existingBook.setPrice(bookPatch.getPrice());
+            }
             bookRepository.save(existingBook);
         } else {
             throw new RuntimeException("Book not found with id: " + id);
         }
     }
 
-    @Override
+
+   /* @Override
     public Book patchBook(Long id, Book bookPatch) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with id " + id));
@@ -76,7 +83,7 @@ public class BookServiceImpl implements BookService {
 
         Book patchedBook = bookRepository.save(book);
         return mapToBook(patchedBook);
-    }
+    }*/
 
 
     private Book mapToBook (Book book){
