@@ -15,4 +15,6 @@ public interface BookService {
     boolean bookExists(String title, String description, String author, Double price);
 
     void updateBook(Book book, Long id);
+
+    Book updateTitle(Long id);
 }
