@@ -16,5 +16,6 @@ public interface BookService {
 
     void updateBook(Book book, Long id);
 
-    Book updateTitle(Long id);
+
+    Book patchBook(Long id, Book bookPatch);
 }

@@ -56,16 +56,28 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateTitle(Long id){
+    public Book patchBook(Long id, Book bookPatch) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with id " + id));
 
-        book.setTitle(book.getTitle());
 
-        Book updatedTitle = bookRepository.save(book);
+        if (bookPatch.getTitle() != null) {
+            book.setTitle(bookPatch.getTitle());
+        }
+        if (bookPatch.getDescription() != null) {
+            book.setDescription(bookPatch.getDescription());
+        }
+        if (bookPatch.getAuthor() != null) {
+            book.setAuthor(bookPatch.getAuthor());
+        }
+        if (bookPatch.getPrice() != null) {
+            book.setPrice(bookPatch.getPrice());
+        }
 
-        return mapToBook(updatedTitle);
+        Book patchedBook = bookRepository.save(book);
+        return mapToBook(patchedBook);
     }
+
 
     private Book mapToBook (Book book){
         Book book_ = new Book();
