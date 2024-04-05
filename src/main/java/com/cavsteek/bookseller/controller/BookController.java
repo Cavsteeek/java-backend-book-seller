@@ -50,7 +50,7 @@ public class BookController {
     public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
         try{
             Book updatedBook = bookService.patchBook(id,book);
-//
+            return ResponseEntity.ok(new UpdatedBookResponse("Book Updated Successfully", updatedBook));
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
