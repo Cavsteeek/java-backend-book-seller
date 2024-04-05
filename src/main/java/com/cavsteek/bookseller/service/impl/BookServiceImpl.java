@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void patchBook(Long id, Book bookPatch) {
+    public Book patchBook(Long id, Book bookPatch) {
         Optional<Book> optionalBook = bookRepository.findById(id);
         if (optionalBook.isPresent()) {
             Book existingBook = optionalBook.get();
@@ -55,7 +55,7 @@ public class BookServiceImpl implements BookService {
             if (bookPatch.getPrice() != null) {
                 existingBook.setPrice(bookPatch.getPrice());
             }
-            bookRepository.save(existingBook);
+            return bookRepository.save(existingBook);
         } else {
             throw new RuntimeException("Book not found with id: " + id);
         }

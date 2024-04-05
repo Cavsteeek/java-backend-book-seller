@@ -49,8 +49,8 @@ public class BookController {
     @PatchMapping("/update-book/{bookId}")
     public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
         try{
-            bookService.patchBook(id,book);
-            ResponseEntity.ok(book);
+            Book updatedBook = bookService.patchBook(id,book);
+            ResponseEntity.ok(updatedBook);
             return ResponseEntity.ok("Book Updated Successfully");
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
