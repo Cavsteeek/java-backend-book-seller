@@ -1,5 +1,6 @@
 package com.cavsteek.bookseller.controller;
 
+import com.cavsteek.bookseller.dto.UpdatedBookResponse;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
-
     @PostMapping
     public ResponseEntity<?> saveBook(@RequestBody Book book){
         try {
@@ -50,8 +50,7 @@ public class BookController {
     public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
         try{
             Book updatedBook = bookService.patchBook(id,book);
-            ResponseEntity.ok(updatedBook);
-            return ResponseEntity.ok("Book Updated Successfully");
+//
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
