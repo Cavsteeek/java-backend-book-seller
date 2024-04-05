@@ -1,4 +1,4 @@
-package com.cavsteek.bookseller.dto;
+package com.cavsteek.bookseller.CustomResponse;
 
 import com.cavsteek.bookseller.model.Book;
 import lombok.AllArgsConstructor;

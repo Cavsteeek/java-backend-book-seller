@@ -1,14 +1,12 @@
 package com.cavsteek.bookseller.controller;
 
-import com.cavsteek.bookseller.dto.UpdatedBookResponse;
+import com.cavsteek.bookseller.CustomResponse.UpdatedBookResponse;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/book")
