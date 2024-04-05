@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/book")
 @RequiredArgsConstructor
@@ -45,10 +47,10 @@ public class BookController {
     }
 
     @PatchMapping("/update-book/{bookId}")
-    public ResponseEntity<?> patchupdateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
+    public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
         try{
-            Book updatedBook = bookService.patchBook(id,book);
-            ResponseEntity.ok(updatedBook);
+            bookService.patchBook(id,book);
+            ResponseEntity.ok(book);
             return ResponseEntity.ok("Book Updated Successfully");
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
