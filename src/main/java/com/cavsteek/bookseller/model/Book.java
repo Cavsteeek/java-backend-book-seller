@@ -25,6 +25,12 @@ public class Book {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "image_name")
+    private String imageName;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "create_time",  nullable = false)
     private LocalDateTime createTime;
 }
