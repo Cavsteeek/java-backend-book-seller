@@ -1,5 +1,6 @@
 package com.cavsteek.bookseller.service.impl;
 
+import com.cavsteek.bookseller.CloudinaryConfig.CloudinaryService;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.service.BookService;
@@ -14,9 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private CloudinaryService cloudinaryService;
 
     @Override
     public Book saveBook(Book book){
+        book.setImageUrl(cloudinaryService.uploadFile(book.getImageFile(), "book_seller"));
         book.setCreateTime(LocalDateTime.now());
         return bookRepository.save(book);
     }

@@ -2,6 +2,7 @@ package com.cavsteek.bookseller.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -25,8 +26,8 @@ public class Book {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "image_name")
-    private String imageName;
+    @Column(name = "image_file")
+    private MultipartFile imageFile;
 
     @Column(name = "image_url")
     private String imageUrl;

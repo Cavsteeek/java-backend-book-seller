@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Long>
 {
     boolean existsByTitleAndDescriptionAndAuthorAndPrice(String title, String description, String author, Double price);
+
+
 }
