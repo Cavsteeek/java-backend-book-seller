@@ -1,4 +1,4 @@
-package com.cavsteek.bookseller.config;
+package com.cavsteek.bookseller.CloudinaryConfig;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
