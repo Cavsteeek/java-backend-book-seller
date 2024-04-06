@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     private final BookService bookService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> saveBook(@RequestPart Book book){
+    public ResponseEntity<?> saveBook(@RequestBody Book book){
         try {
             if(bookService.bookExists(book.getTitle(),book.getDescription(),book.getAuthor(),book.getPrice())){
                 return ResponseEntity.badRequest().body("Book with these Details already exists");
