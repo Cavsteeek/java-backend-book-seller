@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/book")
@@ -15,8 +16,19 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     private final BookService bookService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> saveBook(@RequestBody Book book){
+    public ResponseEntity<?> saveBook(@RequestParam("file") MultipartFile file,
+                                      @RequestParam("title") String title,
+                                      @RequestParam("description") String description,
+                                      @RequestParam("author") String author,
+                                      @RequestParam("price") Double price){
         try {
+            Book book = new Book();
+            book.setTitle(title);
+            book.setDescription(description);
+            book.setAuthor(author);
+            book.setPrice(price);
+            book.setFile(file);
+
             if(bookService.bookExists(book.getTitle(),book.getDescription(),book.getAuthor(),book.getPrice())){
                 return ResponseEntity.badRequest().body("Book with these Details already exists");
             }

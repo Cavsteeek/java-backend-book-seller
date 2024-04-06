@@ -5,13 +5,10 @@ import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -23,16 +20,17 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public ResponseEntity<Map<String, String>> saveBook(Book book){
+    public void saveBook(Book book){
         try {
         String imageUrl = cloudinaryService.uploadFile(book.getFile(), "book_seller");
         book.setImageUrl(imageUrl);
         book.setCreateTime(LocalDateTime.now());
         bookRepository.save(book);
-        return ResponseEntity.ok().body(Map.of("url", book.getImageUrl()));
+//        return ResponseEntity.ok().body(Map.of("url", book.getImageUrl()));
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException("Failed to save book: " + e.getMessage());
         }
     }
 
