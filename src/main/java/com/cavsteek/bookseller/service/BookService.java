@@ -1,12 +1,14 @@
 package com.cavsteek.bookseller.service;
 
 import com.cavsteek.bookseller.model.Book;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookService {
 
-    Book saveBook(Book book);
+    ResponseEntity<Map<String, String>> saveBook(Book book);
 
     void deleteBook(Long id);
 

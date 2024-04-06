@@ -5,6 +5,7 @@ import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
-    @PostMapping
-    public ResponseEntity<?> saveBook(@RequestBody Book book){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> saveBook(@RequestPart Book book){
         try {
             if(bookService.bookExists(book.getTitle(),book.getDescription(),book.getAuthor(),book.getPrice())){
                 return ResponseEntity.badRequest().body("Book with these Details already exists");
             }
-            return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.CREATED);
+            bookService.saveBook(book);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

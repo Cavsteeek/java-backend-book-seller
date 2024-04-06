@@ -26,11 +26,11 @@ public class Book {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "image_file")
-    private MultipartFile imageFile;
-
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Transient
+    private MultipartFile file;
 
     @Column(name = "create_time",  nullable = false)
     private LocalDateTime createTime;

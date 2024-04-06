@@ -5,23 +5,35 @@ import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-    private CloudinaryService cloudinaryService;
+    private final CloudinaryService cloudinaryService;
+//    private Cloudinary cloudinary;
+
 
     @Override
-    public Book saveBook(Book book){
-        book.setImageUrl(cloudinaryService.uploadFile(book.getImageFile(), "book_seller"));
+    public ResponseEntity<Map<String, String>> saveBook(Book book){
+        try {
+        String imageUrl = cloudinaryService.uploadFile(book.getFile(), "book_seller");
+        book.setImageUrl(imageUrl);
         book.setCreateTime(LocalDateTime.now());
-        return bookRepository.save(book);
+        bookRepository.save(book);
+        return ResponseEntity.ok().body(Map.of("url", book.getImageUrl()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -89,7 +101,7 @@ public class BookServiceImpl implements BookService {
     }*/
 
 
-    private Book mapToBook (Book book){
+/*    private Book mapToBook (Book book){
         Book book_ = new Book();
         book_.setTitle(book.getTitle());
         book_.setDescription(book.getDescription());
@@ -97,6 +109,6 @@ public class BookServiceImpl implements BookService {
         book_.setPrice(book.getPrice());
 
         return book_;
-    }
+    }*/
 
 }
