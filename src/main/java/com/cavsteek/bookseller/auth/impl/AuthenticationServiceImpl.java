@@ -29,8 +29,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User signUp(SignUpRequest signUpRequest){
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
-        user.setFirstName(signUpRequest.getFirstName());
-        user.setLastName(signUpRequest.getLastName());
+        user.setFirstName(capitalize(signUpRequest.getFirstName()));
+        user.setLastName(capitalize(signUpRequest.getLastName()));
         user.setEmail(signUpRequest.getEmail());
         user.setRole(Role.USER);
         user.setCreateTime(LocalDateTime.now());
@@ -40,6 +40,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       return userRepository.save(user);
     }
 
+    private String capitalize (String string){
+        return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+    }
     public JwtAuthenticationResponse signIn(SignInRequest signInRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
