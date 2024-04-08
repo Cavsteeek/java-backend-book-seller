@@ -26,10 +26,8 @@ public class BookServiceImpl implements BookService {
         book.setImageUrl(imageUrl);
         book.setCreateTime(LocalDateTime.now());
         bookRepository.save(book);
-//        return ResponseEntity.ok().body(Map.of("url", book.getImageUrl()));
         } catch (Exception e) {
             e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             throw new RuntimeException("Failed to save book: " + e.getMessage());
         }
     }
@@ -67,6 +65,10 @@ public class BookServiceImpl implements BookService {
             }
             if (bookPatch.getPrice() != null) {
                 existingBook.setPrice(bookPatch.getPrice());
+            }
+            if (bookPatch.getFile() != null) {
+                String imageUrl = cloudinaryService.uploadFile(bookPatch.getFile(), "book_seller");
+                existingBook.setImageUrl(imageUrl);
             }
             return bookRepository.save(existingBook);
         } else {
