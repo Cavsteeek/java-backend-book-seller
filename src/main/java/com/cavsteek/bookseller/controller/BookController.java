@@ -60,10 +60,10 @@ public class BookController {
 
     @PatchMapping("/update-book/{bookId}")
     public ResponseEntity<?> updateBookById(@RequestParam(value="file", required = false) MultipartFile file,
-                                            @RequestParam("title") String title,
-                                            @RequestParam("description") String description,
-                                            @RequestParam("author") String author,
-                                            @RequestParam("price") Double price,
+                                            @RequestParam(value="title", required = false) String title,
+                                            @RequestParam(value="description", required = false) String description,
+                                            @RequestParam(value="author", required = false) String author,
+                                            @RequestParam(value="price", required = false) Double price,
                                             @PathVariable("bookId") Long id){
         try{
             Book bookPatch = new Book();
