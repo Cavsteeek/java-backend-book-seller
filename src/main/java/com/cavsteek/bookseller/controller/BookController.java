@@ -67,11 +67,21 @@ public class BookController {
                                             @PathVariable("bookId") Long id){
         try{
             Book bookPatch = new Book();
-            bookPatch.setTitle(title);
-            bookPatch.setDescription(description);
-            bookPatch.setAuthor(author);
-            bookPatch.setPrice(price);
-            bookPatch.setFile(file);
+            if (title != null) {
+                bookPatch.setTitle(title);
+            }
+            if (description != null) {
+                bookPatch.setDescription(description);
+            }
+            if (author != null) {
+                bookPatch.setAuthor(author);
+            }
+            if (price != null) {
+                bookPatch.setPrice(price);
+            }
+            if (file != null) {
+                bookPatch.setFile(file);
+            }
 
             Book updatedBook = bookService.patchBook(id,bookPatch);
             return ResponseEntity.ok(new UpdatedBookResponse("Book Updated Successfully", updatedBook));
