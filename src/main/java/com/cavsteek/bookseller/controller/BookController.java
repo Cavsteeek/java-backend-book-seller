@@ -59,9 +59,21 @@ public class BookController {
     }
 
     @PatchMapping("/update-book/{bookId}")
-    public ResponseEntity<?> updateBookById(@RequestBody Book book, @PathVariable("bookId") Long id){
+    public ResponseEntity<?> updateBookById(@RequestParam(value="file", required = false) MultipartFile file,
+                                            @RequestParam("title") String title,
+                                            @RequestParam("description") String description,
+                                            @RequestParam("author") String author,
+                                            @RequestParam("price") Double price,
+                                            @PathVariable("bookId") Long id){
         try{
-            Book updatedBook = bookService.patchBook(id,book);
+            Book bookPatch = new Book();
+            bookPatch.setTitle(title);
+            bookPatch.setDescription(description);
+            bookPatch.setAuthor(author);
+            bookPatch.setPrice(price);
+            bookPatch.setFile(file);
+
+            Book updatedBook = bookService.patchBook(id,bookPatch);
             return ResponseEntity.ok(new UpdatedBookResponse("Book Updated Successfully", updatedBook));
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
