@@ -26,8 +26,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JWTService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-    // add imageUrl as part of getBook endpoint
-    // in editbook FE do the capitalize thing then add image
 
     public User signUp(SignUpRequest signUpRequest){
         User user = new User();
