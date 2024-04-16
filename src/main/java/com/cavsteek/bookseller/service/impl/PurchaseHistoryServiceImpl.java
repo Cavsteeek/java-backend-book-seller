@@ -43,6 +43,9 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        if (userId == 1) {
+            throw new UnauthorizedUserException("Unauthorized user");
+        }
 
         PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setUser(user);
