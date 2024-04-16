@@ -11,16 +11,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/purchase-history")
+@RequestMapping("api/v1/purchases")
 @RequiredArgsConstructor
 public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
-   /* @PostMapping("/create")
-    public ResponseEntity<?> savePurchaseHistory(@RequestBody PurchaseHistory purchaseHistory){
-        return new ResponseEntity<>(purchaseHistoryService.savePurchaseHistory(), HttpStatus.CREATED);
+    @PostMapping("/create")
+    public ResponseEntity<?> createPurchase(@RequestParam Long userId, @RequestParam Long bookId){
+        try{
+            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistory(userId,bookId);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
-*/
 //    @GetMapping("/view")
 //    public ResponseEntity<?> getAllPurchasesOfUser(@AuthenticationPrincipal User user){
 //        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser());
