@@ -20,7 +20,7 @@ public class PurchaseHistoryController {
     public ResponseEntity<?> createPurchase(@RequestParam Long userId, @RequestParam Long bookId){
         try{
             PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistory(userId,bookId);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
         } catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
