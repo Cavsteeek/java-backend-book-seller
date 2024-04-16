@@ -1,6 +1,6 @@
 package com.cavsteek.bookseller.controller;
 
-import com.cavsteek.bookseller.dto.GetUserResponse;
+
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.service.UserService;
 import lombok.RequiredArgsConstructor;

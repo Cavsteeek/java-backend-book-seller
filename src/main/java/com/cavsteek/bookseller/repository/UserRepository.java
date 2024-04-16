@@ -1,10 +1,10 @@
 package com.cavsteek.bookseller.repository;
 
-import com.cavsteek.bookseller.dto.GetUserResponse;
+
 import com.cavsteek.bookseller.model.Role;
 import com.cavsteek.bookseller.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 
 
 import java.util.List;

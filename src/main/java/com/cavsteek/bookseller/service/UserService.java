@@ -1,6 +1,6 @@
 package com.cavsteek.bookseller.service;
 
-import com.cavsteek.bookseller.dto.GetUserResponse;
+
 import com.cavsteek.bookseller.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
