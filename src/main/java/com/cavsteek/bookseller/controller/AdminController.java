@@ -21,13 +21,13 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping("/all-users")
-    public ResponseEntity<?> getAllUsers(){
+    public ResponseEntity<?> getAllUsers() {
         List<User> userList = userService.findUsersByRole();
         return ResponseEntity.ok(userList);
     }
 
     @DeleteMapping("/delete-user/{userId}")
-    public ResponseEntity<?> deleteUserById(@PathVariable Long userId){
+    public ResponseEntity<?> deleteUserById(@PathVariable Long userId) {
         try {
             userService.deleteUser(userId);
             return ResponseEntity.ok("User deleted Successfully");

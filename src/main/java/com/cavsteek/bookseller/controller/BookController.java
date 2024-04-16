@@ -15,12 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> saveBook(@RequestParam("file") MultipartFile file,
                                       @RequestParam("title") String title,
                                       @RequestParam("description") String description,
                                       @RequestParam("author") String author,
-                                      @RequestParam("price") Double price){
+                                      @RequestParam("price") Double price) {
         try {
             Book book = new Book();
             book.setTitle(title);
@@ -29,7 +30,7 @@ public class BookController {
             book.setPrice(price);
             book.setFile(file);
 
-            if(bookService.bookExists(book.getTitle(),book.getDescription(),book.getAuthor(),book.getPrice())){
+            if (bookService.bookExists(book.getTitle(), book.getDescription(), book.getAuthor(), book.getPrice())) {
                 return ResponseEntity.badRequest().body("Book with these Details already exists");
             }
             bookService.saveBook(book);
@@ -40,7 +41,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{bookId}")
-    public ResponseEntity<?> deleteBookById(@PathVariable Long bookId){
+    public ResponseEntity<?> deleteBookById(@PathVariable Long bookId) {
         try {
             bookService.deleteBook(bookId);
             return ResponseEntity.ok("Book deleted Successfully");
@@ -50,7 +51,7 @@ public class BookController {
     }
 
     @GetMapping("/view-all")
-    public ResponseEntity<?> getAllBooks(){
+    public ResponseEntity<?> getAllBooks() {
         try {
             return new ResponseEntity<>(bookService.findAllBooks(), HttpStatus.OK);
         } catch (Exception e) {
@@ -59,13 +60,13 @@ public class BookController {
     }
 
     @PatchMapping("/update-book/{bookId}")
-    public ResponseEntity<?> updateBookById(@RequestParam(value="file", required = false) MultipartFile file,
-                                            @RequestParam(value="title", required = false) String title,
-                                            @RequestParam(value="description", required = false) String description,
-                                            @RequestParam(value="author", required = false) String author,
-                                            @RequestParam(value="price", required = false) Double price,
-                                            @PathVariable("bookId") Long id){
-        try{
+    public ResponseEntity<?> updateBookById(@RequestParam(value = "file", required = false) MultipartFile file,
+                                            @RequestParam(value = "title", required = false) String title,
+                                            @RequestParam(value = "description", required = false) String description,
+                                            @RequestParam(value = "author", required = false) String author,
+                                            @RequestParam(value = "price", required = false) Double price,
+                                            @PathVariable("bookId") Long id) {
+        try {
             Book bookPatch = new Book();
             if (title != null) {
                 bookPatch.setTitle(title);
@@ -83,9 +84,9 @@ public class BookController {
                 bookPatch.setFile(file);
             }
 
-            Book updatedBook = bookService.patchBook(id,bookPatch);
+            Book updatedBook = bookService.patchBook(id, bookPatch);
             return ResponseEntity.ok(new UpdatedBookResponse("Book Updated Successfully", updatedBook));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

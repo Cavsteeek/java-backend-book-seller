@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping
-    public ResponseEntity<String> sayHello(){
+    public ResponseEntity<String> sayHello() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        return ResponseEntity.ok("Welcome "+ username );
+        return ResponseEntity.ok("Welcome " + username);
     }
 }

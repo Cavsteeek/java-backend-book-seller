@@ -22,25 +22,25 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest) {
         try {
             if (userService.usernameExists(signUpRequest.getUsername())) {
                 return ResponseEntity.badRequest().body("User with this Username already exists");
             }
             return ResponseEntity.ok(service.signUp(signUpRequest));
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest signInRequest){
+    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest signInRequest) {
         JwtAuthenticationResponse user = service.signIn(signInRequest);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest){
-        return ResponseEntity.ok (service.refreshToken(refreshTokenRequest));
+    public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        return ResponseEntity.ok(service.refreshToken(refreshTokenRequest));
     }
 }

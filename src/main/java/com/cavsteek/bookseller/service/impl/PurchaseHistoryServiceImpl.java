@@ -22,13 +22,10 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     private final UserRepository userRepository;
 
     @Override
-    public PurchaseHistory savePurchaseHistory(PurchaseRequest purchaseRequest)
-    {
+    public PurchaseHistory savePurchaseHistory(PurchaseRequest purchaseRequest) {
 
-        User user = userRepository.findById(purchaseRequest.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Book book = bookRepository.findById(purchaseRequest.getBookId())
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+        User user = userRepository.findById(purchaseRequest.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+        Book book = bookRepository.findById(purchaseRequest.getBookId()).orElseThrow(() -> new RuntimeException("Book not found"));
 
         purchaseRequest.setPrice(book.getPrice());
 
@@ -41,18 +38,11 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     }
 
     @Override
-    public PurchaseHistory savePurchaseHistoryy(Long userId, Long bookId)
-    {
+    public PurchaseHistory savePurchaseHistoryy(Long userId, Long bookId) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.getRole().equals("USER")) {
-         throw new UnauthorizedUserException("Unauthorized user");
-        }
-
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
 
         PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setUser(user);
@@ -60,9 +50,8 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         purchaseHistory.setPrice(book.getPrice());
         purchaseHistory.setPurchaseTime(LocalDateTime.now());
         return purchaseHistoryRepository.save(purchaseHistory);
+
     }
-
-
 
 
 }

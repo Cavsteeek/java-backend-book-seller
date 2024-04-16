@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public User signUp(SignUpRequest signUpRequest){
+    public User signUp(SignUpRequest signUpRequest) {
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setFirstName(capitalize(signUpRequest.getFirstName()));
@@ -38,12 +38,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(
                 passwordEncoder.encode(signUpRequest.getPassword())
         );
-      return userRepository.save(user);
+        return userRepository.save(user);
     }
 
-    private String capitalize (String string){
+    private String capitalize(String string) {
         return Character.toUpperCase(string.charAt(0)) + string.substring(1);
     }
+
     public JwtAuthenticationResponse signIn(SignInRequest signInRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -68,10 +69,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RuntimeException("An error occurred during sign-in", e);
         }
     }
-    public JwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
+
+    public JwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
         String userName = jwtService.extractUsername(refreshTokenRequest.getToken());
         User user = userRepository.findByUsername(userName).orElseThrow();
-        if (jwtService.isTokenValid(refreshTokenRequest.getToken(), user)){
+        if (jwtService.isTokenValid(refreshTokenRequest.getToken(), user)) {
             var jwt = jwtService.generateToken(user);
 
             JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();

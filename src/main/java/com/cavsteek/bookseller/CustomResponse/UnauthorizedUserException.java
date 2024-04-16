@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnauthorizedUserException extends RuntimeException{
+public class UnauthorizedUserException extends RuntimeException {
     private String message;
 }

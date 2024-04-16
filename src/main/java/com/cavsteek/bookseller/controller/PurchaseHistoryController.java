@@ -17,11 +17,11 @@ public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPurchase(@RequestParam Long userId, @RequestParam Long bookId){
-        try{
+    public ResponseEntity<?> createPurchase(@RequestParam Long userId, @RequestParam Long bookId) {
+        try {
             PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistoryy(userId, bookId);
             return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
-        } catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

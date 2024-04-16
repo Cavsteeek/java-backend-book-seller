@@ -36,12 +36,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/book/**").permitAll()
-                        .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
-                        .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.PATCH, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
-                               .requestMatchers("/api/v1/purchases/create").hasAnyAuthority(Role.USER.name())
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/book/**").permitAll()
+                                .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.PATCH, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers("/api/v1/purchases/create").hasAnyAuthority(Role.USER.name())
 //                        .requestMatchers(HttpMethod.GET,"/api/v1/purchase-history/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -64,10 +64,12 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userService.userDetailsService().loadUserByUsername(username);
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -79,7 +81,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer(){
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
