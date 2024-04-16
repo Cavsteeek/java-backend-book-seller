@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
-    @PostMapping("/create")
+   /* @PostMapping("/create")
     public ResponseEntity<?> savePurchaseHistory(@RequestBody PurchaseHistory purchaseHistory){
-        return new ResponseEntity<>(purchaseHistoryService.savePurchaseHistory(purchaseHistory), HttpStatus.CREATED);
+        return new ResponseEntity<>(purchaseHistoryService.savePurchaseHistory(), HttpStatus.CREATED);
     }
-
+*/
 //    @GetMapping("/view")
 //    public ResponseEntity<?> getAllPurchasesOfUser(@AuthenticationPrincipal User user){
 //        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser());

@@ -19,11 +19,11 @@ public class PurchaseHistory {
     private LocalDateTime purchaseTime;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 

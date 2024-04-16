@@ -7,7 +7,7 @@ import com.cavsteek.bookseller.repository.projection.PurchaseItem;
 import java.util.List;
 
 public interface PurchaseHistoryService {
-    PurchaseHistory savePurchaseHistory(PurchaseHistory purchaseHistory);
+    PurchaseHistory savePurchaseHistory(Long userId,Long bookId);
 
 
 
