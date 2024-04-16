@@ -16,7 +16,6 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final CloudinaryService cloudinaryService;
-//    private Cloudinary cloudinary;
 
 
     @Override

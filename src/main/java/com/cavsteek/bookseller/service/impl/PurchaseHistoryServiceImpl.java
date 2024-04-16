@@ -1,6 +1,8 @@
 package com.cavsteek.bookseller.service.impl;
 
+import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.PurchaseHistory;
+import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.repository.PurchaseHistoryRepository;
 import com.cavsteek.bookseller.repository.UserRepository;
 import com.cavsteek.bookseller.service.PurchaseHistoryService;
@@ -17,17 +19,13 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
 
     @Override
     public PurchaseHistory savePurchaseHistory(PurchaseHistory purchaseHistory) {
+        Book book = new Book();
+        purchaseHistory.setPrice(book.getPrice());
         purchaseHistory.setPurchaseTime(LocalDateTime.now());
         return purchaseHistoryRepository.save(purchaseHistory);
     }
 
 
-
-
-//    @Override
-//    public List<PurchaseHistory> findPurchasedItemsOfUser(){
-//        return purchaseHistoryRepository.findAllPurchases();
-//    }
 
 
 }
