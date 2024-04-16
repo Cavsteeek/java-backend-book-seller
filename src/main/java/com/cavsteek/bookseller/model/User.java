@@ -1,5 +1,6 @@
 package com.cavsteek.bookseller.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -49,6 +50,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<PurchaseHistory> purchaseHistories;
 
 
