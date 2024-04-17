@@ -21,7 +21,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
-    @Override
+  /*  @Override
     public PurchaseHistory savePurchaseHistory(PurchaseResponse purchaseRequest) {
 
         User user = userRepository.findById(purchaseRequest.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -35,7 +35,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         purchaseHistory.setPrice(purchaseRequest.getPrice());
         purchaseHistory.setPurchaseTime(LocalDateTime.now());
         return purchaseHistoryRepository.save(purchaseHistory);
-    }
+    }*/
 
     @Override
     public PurchaseHistory savePurchaseHistoryy(Long userId, Long bookId) {
