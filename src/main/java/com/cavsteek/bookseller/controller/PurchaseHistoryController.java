@@ -17,9 +17,9 @@ public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPurchase(@RequestParam Long userId, @RequestParam Long bookId) {
+    public ResponseEntity<?> createPurchase(@RequestBody) {
         try {
-            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistoryy(userId, bookId);
+            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistoryy(user, book);
             return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
