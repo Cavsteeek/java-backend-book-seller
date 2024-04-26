@@ -1,5 +1,7 @@
 package com.cavsteek.bookseller.controller;
 
+import com.cavsteek.bookseller.dto.PurchaseRequest;
+import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.PurchaseHistory;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.service.PurchaseHistoryService;
@@ -17,9 +19,9 @@ public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPurchase(@RequestBody) {
+    public ResponseEntity<?> createPurchase(@RequestBody PurchaseRequest purchaseRequest) {
         try {
-            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistoryy(user, book);
+            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistoryy(purchaseRequest.getUserId(), purchaseRequest.getBookId());
             return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
