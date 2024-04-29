@@ -38,7 +38,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     }*/
 
     @Override
-    public PurchaseHistory savePurchaseHistoryy(Long userId, Long bookId) {
+    public PurchaseHistory savePurchaseHistory(Long userId, Long bookId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 

@@ -18,18 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createPurchase(@RequestBody PurchaseRequest purchaseRequest) {
+    @PostMapping("/create/{userId}/{bookId}")
+    public ResponseEntity<?> createPurchase(@PathVariable Long userId, @PathVariable Long bookId) {
         try {
-            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistoryy(purchaseRequest.getUserId(), purchaseRequest.getBookId());
+            PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistory(userId, bookId);
             return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
-//    @GetMapping("/view")
-//    public ResponseEntity<?> getAllPurchasesOfUser(@AuthenticationPrincipal User user){
-//        return ResponseEntity.ok(purchaseHistoryService.findPurchasedItemsOfUser());
-//    }
+
 }

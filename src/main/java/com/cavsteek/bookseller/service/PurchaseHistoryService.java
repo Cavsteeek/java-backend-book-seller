@@ -6,7 +6,7 @@ import com.cavsteek.bookseller.model.PurchaseHistory;
 public interface PurchaseHistoryService {
   /*  PurchaseHistory savePurchaseHistory(PurchaseResponse purchaseRequest);*/
 
-    PurchaseHistory savePurchaseHistoryy(Long userId, Long bookId);
+    PurchaseHistory savePurchaseHistory(Long userId, Long bookId);
 
 
 //    List<PurchaseHistory> findPurchasedItemsOfUser();
