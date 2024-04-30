@@ -35,7 +35,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         purchaseHistory.setUser(user);
         purchaseHistory.setBook(book);
         purchaseHistory.setQuantity(purchaseRequest.getQuantity());
-        purchaseHistory.setPrice(book.getPrice());
+        purchaseHistory.setPrice(book.getPrice() * purchaseHistory.getQuantity());
         purchaseHistory.setPurchaseTime(LocalDateTime.now());
 
         return purchaseHistoryRepository.save(purchaseHistory);
