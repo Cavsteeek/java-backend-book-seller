@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class PurchaseRequest {
-    private Long userId;
-    private Long bookId;
+    private Integer quantity;
 }

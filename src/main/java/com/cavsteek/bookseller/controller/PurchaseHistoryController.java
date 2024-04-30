@@ -19,8 +19,10 @@ public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
     @PostMapping("/create/{userId}/{bookId}")
-    public ResponseEntity<?> createPurchase(@PathVariable Long userId, @PathVariable Long bookId) {
+    public ResponseEntity<?> createPurchase(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody PurchaseRequest purchaseRequest) {
         try {
+            PurchaseHistory purchaseHistoryy = new PurchaseHistory();
+            purchaseHistoryy.setQuantity(purchaseRequest.getQuantity());
             PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistory(userId, bookId);
             return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
         } catch (Exception e) {

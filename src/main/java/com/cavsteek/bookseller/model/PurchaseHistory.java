@@ -17,6 +17,10 @@ public class PurchaseHistory {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+
+
     @Column(name = "purchase_time", nullable = false)
     private LocalDateTime purchaseTime;
 
