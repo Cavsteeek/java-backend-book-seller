@@ -12,13 +12,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/purchases")
 @RequiredArgsConstructor
 public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
 
-    @PostMapping("/create/{userId}/{bookId}")
+    @PostMapping("/create/{userId}/{bookId}") // For Users
     public ResponseEntity<?> createPurchase(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody PurchaseRequest purchaseRequest) {
         try {
             PurchaseHistory purchaseHistory = purchaseHistoryService.savePurchaseHistory(userId, bookId, purchaseRequest);
@@ -26,6 +28,12 @@ public class PurchaseHistoryController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/all-purchases")
+    public ResponseEntity<?> gettAllPurchases(){
+        List<PurchaseHistory> purchaseHistoryList = purchaseHistoryService.getAllPurchases();
+        return ResponseEntity.ok(purchaseHistoryList);
     }
 
 }

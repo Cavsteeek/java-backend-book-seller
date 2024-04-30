@@ -2,7 +2,6 @@ package com.cavsteek.bookseller.service.impl;
 
 import com.cavsteek.bookseller.CustomResponse.UnauthorizedUserException;
 import com.cavsteek.bookseller.dto.PurchaseRequest;
-import com.cavsteek.bookseller.dto.PurchaseResponse;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.PurchaseHistory;
 import com.cavsteek.bookseller.model.User;
@@ -14,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +42,9 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
 
     }
 
+    @Override
+    public List<PurchaseHistory> getAllPurchases() {
+        return purchaseHistoryRepository.findAll();
+    }
 
 }
