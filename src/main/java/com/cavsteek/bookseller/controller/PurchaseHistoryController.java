@@ -32,8 +32,12 @@ public class PurchaseHistoryController {
 
     @GetMapping("/all-purchases")
     public ResponseEntity<?> getAllPurchases(){
-        List<PurchaseHistory> purchaseHistoryList = purchaseHistoryService.getAllPurchases();
-        return ResponseEntity.ok(purchaseHistoryList);
+        try{
+            return new ResponseEntity<>(purchaseHistoryService.getAllPurchases(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }
