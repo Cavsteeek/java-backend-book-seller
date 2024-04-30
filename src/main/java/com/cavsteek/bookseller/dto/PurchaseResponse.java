@@ -6,4 +6,5 @@ import lombok.Data;
 public class PurchaseResponse {
     private Long bookTitle;
     private Double price;
+    private Integer quantity;
 }
