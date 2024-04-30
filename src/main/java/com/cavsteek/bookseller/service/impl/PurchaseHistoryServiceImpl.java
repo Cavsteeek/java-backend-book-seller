@@ -27,7 +27,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        if ("ADMIN".equals(user.getRole())) {
+        if (userId == 1) {
             throw new UnauthorizedUserException("Unauthorized user");
         }
 
