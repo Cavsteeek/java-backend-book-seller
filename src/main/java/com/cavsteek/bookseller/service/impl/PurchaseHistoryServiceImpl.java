@@ -1,6 +1,7 @@
 package com.cavsteek.bookseller.service.impl;
 
 import com.cavsteek.bookseller.CustomResponse.UnauthorizedUserException;
+import com.cavsteek.bookseller.dto.PurchaseRequest;
 import com.cavsteek.bookseller.dto.PurchaseResponse;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.PurchaseHistory;
@@ -21,25 +22,8 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
-  /*  @Override
-    public PurchaseHistory savePurchaseHistory(PurchaseResponse purchaseRequest) {
-
-        User user = userRepository.findById(purchaseRequest.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-        Book book = bookRepository.findById(purchaseRequest.getBookId()).orElseThrow(() -> new RuntimeException("Book not found"));
-
-        purchaseRequest.setPrice(book.getPrice());
-
-        PurchaseHistory purchaseHistory = new PurchaseHistory();
-        purchaseHistory.setUser(user);
-        purchaseHistory.setBook(book);
-        purchaseHistory.setPrice(purchaseRequest.getPrice());
-        purchaseHistory.setPurchaseTime(LocalDateTime.now());
-        return purchaseHistoryRepository.save(purchaseHistory);
-    }*/
-
     @Override
-    public PurchaseHistory savePurchaseHistory(Long userId, Long bookId) {
-
+    public PurchaseHistory savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
@@ -50,6 +34,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setUser(user);
         purchaseHistory.setBook(book);
+        purchaseHistory.setQuantity(purchaseRequest.getQuantity());
         purchaseHistory.setPrice(book.getPrice());
         purchaseHistory.setPurchaseTime(LocalDateTime.now());
 
