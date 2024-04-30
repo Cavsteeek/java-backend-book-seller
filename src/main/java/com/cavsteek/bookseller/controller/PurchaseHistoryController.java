@@ -31,7 +31,7 @@ public class PurchaseHistoryController {
     }
 
     @GetMapping("/all-purchases")
-    public ResponseEntity<?> gettAllPurchases(){
+    public ResponseEntity<?> getAllPurchases(){
         List<PurchaseHistory> purchaseHistoryList = purchaseHistoryService.getAllPurchases();
         return ResponseEntity.ok(purchaseHistoryList);
     }
