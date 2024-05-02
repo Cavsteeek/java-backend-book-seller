@@ -9,4 +9,5 @@ public class JwtAuthenticationResponse {
     private String role;
     private String username;
     private String refreshToken;
+    private Long userId;
 }
