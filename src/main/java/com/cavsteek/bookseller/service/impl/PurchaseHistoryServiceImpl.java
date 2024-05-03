@@ -47,4 +47,9 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         return purchaseHistoryRepository.findAll();
     }
 
+    @Override
+    public void deleteOrder(Long id){
+        purchaseHistoryRepository.deleteById(id);
+    }
+
 }

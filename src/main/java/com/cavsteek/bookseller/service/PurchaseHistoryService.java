@@ -13,4 +13,5 @@ public interface PurchaseHistoryService {
 
     List<PurchaseHistory> getAllPurchases();
 
+    void deleteOrder(Long id);
 }
