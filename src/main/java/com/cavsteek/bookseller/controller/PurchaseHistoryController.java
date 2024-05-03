@@ -40,4 +40,14 @@ public class PurchaseHistoryController {
 
     }
 
+    @DeleteMapping("/delete-order/{orderId}")
+    public ResponseEntity<?> deleteOrderById(@PathVariable Long orderId){
+        try{
+            purchaseHistoryService.deleteOrder(orderId);
+            return ResponseEntity.ok("Deleted Successfully");
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
