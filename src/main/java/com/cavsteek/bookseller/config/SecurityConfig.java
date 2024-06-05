@@ -35,6 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/book/**").permitAll()
