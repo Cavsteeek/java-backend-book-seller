@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/purchases")
+@CrossOrigin(origins = {"https://cavsteek-s.vercel.app", "http://localhost:8081"})
 @RequiredArgsConstructor
 public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;

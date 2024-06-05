@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/admin")
+@CrossOrigin(origins = {"https://cavsteek-s.vercel.app", "http://localhost:8081"})
 public class AdminController {
     private final UserService userService;
 

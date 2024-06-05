@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/book")
+@CrossOrigin(origins = {"https://cavsteek-s.vercel.app", "http://localhost:8081"})
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
