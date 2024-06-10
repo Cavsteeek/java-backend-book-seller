@@ -6,9 +6,12 @@ import com.cavsteek.bookseller.dto.RefreshTokenRequest;
 import com.cavsteek.bookseller.dto.SignInRequest;
 import com.cavsteek.bookseller.dto.SignUpRequest;
 import com.cavsteek.bookseller.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,8 +40,24 @@ public class AuthenticationController {
         return ResponseEntity.ok(user);
     }
 
+  /*  @GetMapping("/oauth2-login")
+    public String oauth2Login(HttpServletRequest request) {
+        return "redirect:/oauth2/authorization/github";
+    }
+
+    @GetMapping("/oauth2-success")
+    public ResponseEntity<String> oauth2LoginSuccess(Authentication authentication) {
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            return ResponseEntity.ok("OAuth2 Login Successful: " + authentication.getName());
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("OAuth2 Login Failed");
+        }
+    }*/
+
     @PostMapping("/refresh")
     public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(service.refreshToken(refreshTokenRequest));
     }
+
+    // Implement Logout
 }
