@@ -25,4 +25,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     User patchUser(Long id, User userPatch);
+
+    User resetPassword(Long id, String newPassword);
 }
