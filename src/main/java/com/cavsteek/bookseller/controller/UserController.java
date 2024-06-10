@@ -3,6 +3,7 @@ package com.cavsteek.bookseller.controller;
 
 import com.cavsteek.bookseller.CustomResponse.UpdatedBookResponse;
 import com.cavsteek.bookseller.CustomResponse.UpdatedUserResponse;
+import com.cavsteek.bookseller.dto.ResetPasswordRequest;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.repository.UserRepository;
@@ -30,6 +31,7 @@ public class UserController {
         return ResponseEntity.ok("Welcome " + username);
     }*/
     @PatchMapping("/edit-profile/{userId}")
+    // implement if userId != token.userId then throw error
     public ResponseEntity<?> editUserProfileById(@RequestParam(value = "username", required = false) String username,
                                                  @RequestParam(value = "email", required = false) String email,
                                                  @RequestParam(value = "firstName", required = false) String firstName,
@@ -57,15 +59,16 @@ public class UserController {
         }
     }
 
-    @PutMapping("/password-reset/{userId}")
-    public ResponseEntity<?> passwordReset(@PathVariable("userId") Long userId, @RequestBody String password){
+    @PatchMapping("/password-reset/{userId}")
+    // implement if userId != token.userId then throw error
+    public ResponseEntity<?> passwordReset(@PathVariable("userId") Long userId, @RequestBody ResetPasswordRequest request){
         try {
-            User newPassword = userService.resetPassword(userId, password);
+            User newPassword = userService.resetPassword(userId, request);
             return ResponseEntity.ok(new UpdatedUserResponse("Password Updated Successfully", newPassword));
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
-
+//find out why password reset isn't working
 }

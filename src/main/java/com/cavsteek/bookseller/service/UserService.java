@@ -1,6 +1,7 @@
 package com.cavsteek.bookseller.service;
 
 
+import com.cavsteek.bookseller.dto.ResetPasswordRequest;
 import com.cavsteek.bookseller.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -26,5 +27,6 @@ public interface UserService {
 
     User patchUser(Long id, User userPatch);
 
-    User resetPassword(Long id, String newPassword);
+
+    User resetPassword(Long id, ResetPasswordRequest request);
 }
