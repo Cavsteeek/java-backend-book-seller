@@ -1,6 +1,8 @@
 package com.cavsteek.bookseller.config;
 
 
+import com.cavsteek.bookseller.jwt.JWTService;
+import com.cavsteek.bookseller.jwt.impl.JWTServiceImpl;
 import com.cavsteek.bookseller.model.Role;
 import com.cavsteek.bookseller.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -35,6 +39,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
+    private final JWTServiceImpl jwtService;
 
 
     @Bean
@@ -60,8 +65,12 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
-//                .oauth2Login(withDefaults())
+                /*.oauth2Login(oauth2 -> oauth2
+                        .loginPage("/api/v1/auth/login")
+                        .defaultSuccessUrl("/api/v1/auth/loginSuccess")
+                        .userInfoEndpoint(userInfo ->  userInfo
+                                .oidcUserService(this.oidcUserService()))
+                )*/
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -72,6 +81,8 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

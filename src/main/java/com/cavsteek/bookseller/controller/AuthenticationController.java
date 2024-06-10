@@ -40,20 +40,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(user);
     }
 
-  /*  @GetMapping("/oauth2-login")
-    public String oauth2Login(HttpServletRequest request) {
-        return "redirect:/oauth2/authorization/github";
-    }
-
-    @GetMapping("/oauth2-success")
-    public ResponseEntity<String> oauth2LoginSuccess(Authentication authentication) {
-        if (authentication instanceof OAuth2AuthenticationToken) {
-            return ResponseEntity.ok("OAuth2 Login Successful: " + authentication.getName());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("OAuth2 Login Failed");
-        }
-    }*/
-
     @PostMapping("/refresh")
     public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(service.refreshToken(refreshTokenRequest));

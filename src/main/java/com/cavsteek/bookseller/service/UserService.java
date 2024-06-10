@@ -23,4 +23,6 @@ public interface UserService {
     boolean usernameExists(String username);
 
     void deleteUser(Long id);
+
+    User patchUser(Long id, User userPatch);
 }
