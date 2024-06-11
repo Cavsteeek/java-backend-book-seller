@@ -5,6 +5,7 @@ import com.cavsteek.bookseller.CustomResponse.UpdatedBookResponse;
 import com.cavsteek.bookseller.CustomResponse.UpdatedUserResponse;
 import com.cavsteek.bookseller.dto.JwtAuthenticationResponse;
 import com.cavsteek.bookseller.dto.ResetPasswordRequest;
+import com.cavsteek.bookseller.dto.changePasswordRequest;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.repository.UserRepository;
@@ -18,6 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -64,20 +68,57 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/password-reset/{userId}")
-    // implement if userId != token.userId then throw error
-    public ResponseEntity<?> passwordReset(@PathVariable("userId") Long userId, @RequestBody ResetPasswordRequest request) {
-        Long loggedInUser = getAuthenticatedUserId();
-        if (userId.equals(loggedInUser)) {
-            try {
-                User newPassword = userService.resetPassword(userId, request);
-                return ResponseEntity.ok(new UpdatedUserResponse("Password Updated Successfully", newPassword));
-            } catch (Exception e) {
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    /*    @PatchMapping("/password-reset/{userId}")
+        // implement if userId != token.userId then throw error
+        public ResponseEntity<?> passwordReset(@PathVariable("userId") Long userId, @RequestBody ResetPasswordRequest request) {
+            Long loggedInUser = getAuthenticatedUserId();
+            if (userId.equals(loggedInUser)) {
+                try {
+                    User newPassword = userService.resetPassword(userId, request);
+                    return ResponseEntity.ok(new UpdatedUserResponse("Password Updated Successfully", newPassword));
+                } catch (Exception e) {
+                    return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            } else {
+                return new ResponseEntity<>("You are not authorised to reset this password", HttpStatus.FORBIDDEN);
             }
-        } else {
-            return new ResponseEntity<>("You are not authorised to reset this password", HttpStatus.FORBIDDEN);
+        }*/
+    @PatchMapping("/password-reset")
+    // implement if userId != token.userId then throw error
+    public ResponseEntity<?> passwordChange(@RequestBody changePasswordRequest request, Principal connectedUser) {
+        try {
+            userService.changePassword(request, connectedUser);
+            return new ResponseEntity<>("Password Updated Successfully", HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/request-reset")
+    public ResponseEntity<?> requestPasswordResetOTP(@RequestParam String email) {
+        String response = userService.passwordResetOTP(email);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<String> verifyOTPP(@RequestParam String email, @RequestParam String otp) {
+        boolean isValid = userService.verifyOTP(email, otp);
+        if (isValid) {
+            return ResponseEntity.ok("OTP is valid. You can reset your password.");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid OTP.");
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String otp, @RequestBody ResetPasswordRequest request) {
+        try {
+            userService.resetPassword(email, otp,request);
+            return ResponseEntity.ok("Password has been reset successfully.");
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     private Long getAuthenticatedUserId() {
@@ -86,4 +127,6 @@ public class UserController {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return user.getId();
     }
+
+
 }

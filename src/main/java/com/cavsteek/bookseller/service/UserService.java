@@ -2,11 +2,12 @@ package com.cavsteek.bookseller.service;
 
 
 import com.cavsteek.bookseller.dto.ResetPasswordRequest;
+import com.cavsteek.bookseller.dto.changePasswordRequest;
 import com.cavsteek.bookseller.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -28,5 +29,13 @@ public interface UserService {
     User patchUser(Long id, User userPatch);
 
 
-    User resetPassword(Long id, ResetPasswordRequest request);
+    /*User resetPassword(Long id, ResetPasswordRequest request);*/
+
+    void changePassword(changePasswordRequest request, Principal connectedUser);
+
+    String passwordResetOTP(String userEmail);
+
+    void resetPassword(String userEmail,String otp, ResetPasswordRequest request);
+
+    boolean verifyOTP(String email, String otp);
 }

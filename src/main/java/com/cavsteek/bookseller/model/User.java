@@ -35,6 +35,12 @@ public class User implements UserDetails {
     @Column(name = "firstName",nullable = false, length = 100)
     private String firstName;
 
+    @Column(name = "passwordResetOTP",nullable = true )
+    private String OTP;
+
+    @Column(name = "otp_expiry", nullable = true)
+    private LocalDateTime otpExpiry;
+
     @Email
     @Column(nullable = false, unique = true)
     private String email;
