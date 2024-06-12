@@ -20,6 +20,9 @@ public class Book {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "genre", nullable = true)
+    private String genre;
+
     @Column(name = "author", nullable = false)
     private String author;
 

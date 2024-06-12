@@ -44,6 +44,4 @@ public class AuthenticationController {
     public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(service.refreshToken(refreshTokenRequest));
     }
-
-    // Implement Logout
 }

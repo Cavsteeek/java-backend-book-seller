@@ -38,6 +38,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void getBookDetails(Long id)
+    {
+        bookRepository.findById(id);
+    }
+
+    @Override
     public List<Book> findAllBooks()
     {
         return bookRepository.findAll();
@@ -58,6 +64,9 @@ public class BookServiceImpl implements BookService {
             }
             if (bookPatch.getDescription() != null) {
                 existingBook.setDescription(bookPatch.getDescription());
+            }
+            if (bookPatch.getGenre() != null) {
+                existingBook.setGenre(bookPatch.getGenre());
             }
             if (bookPatch.getAuthor() != null) {
                 existingBook.setAuthor(bookPatch.getAuthor());

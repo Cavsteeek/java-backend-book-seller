@@ -21,12 +21,14 @@ public class BookController {
     public ResponseEntity<?> saveBook(@RequestParam("file") MultipartFile file,
                                       @RequestParam("title") String title,
                                       @RequestParam("description") String description,
+                                      @RequestParam("genre") String genre,
                                       @RequestParam("author") String author,
                                       @RequestParam("price") Double price) {
         try {
             Book book = new Book();
             book.setTitle(title);
             book.setDescription(description);
+            book.setGenre(genre);
             book.setAuthor(author);
             book.setPrice(price);
             book.setFile(file);
@@ -51,6 +53,16 @@ public class BookController {
         }
     }
 
+    @GetMapping("/{bookId}")
+    public ResponseEntity<?> getBookById(@PathVariable Long bookId) {
+        try {
+            bookService.getBookDetails(bookId);
+            return ResponseEntity.ok("Successful");
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/view-all")
     public ResponseEntity<?> getAllBooks() {
         try {
@@ -64,6 +76,7 @@ public class BookController {
     public ResponseEntity<?> updateBookById(@RequestParam(value = "file", required = false) MultipartFile file,
                                             @RequestParam(value = "title", required = false) String title,
                                             @RequestParam(value = "description", required = false) String description,
+                                            @RequestParam(value = "genre", required = false) String genre,
                                             @RequestParam(value = "author", required = false) String author,
                                             @RequestParam(value = "price", required = false) Double price,
                                             @PathVariable("bookId") Long id) {
@@ -74,6 +87,9 @@ public class BookController {
             }
             if (description != null) {
                 bookPatch.setDescription(description);
+            }
+            if (genre != null) {
+                bookPatch.setGenre(genre);
             }
             if (author != null) {
                 bookPatch.setAuthor(author);

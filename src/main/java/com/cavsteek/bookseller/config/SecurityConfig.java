@@ -54,8 +54,8 @@ public class SecurityConfig {
 //                }))
                 .authorizeHttpRequests(request -> request
                                 .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/book/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/user/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                                .requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers(HttpMethod.PATCH,"/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
                                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
@@ -82,8 +82,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -106,6 +104,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-
 }
