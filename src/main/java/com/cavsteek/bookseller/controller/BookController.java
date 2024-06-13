@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/book")
 @CrossOrigin(origins = {"https://cavsteek-s.vercel.app", "http://localhost:8081"})
@@ -53,11 +55,11 @@ public class BookController {
         }
     }
 
-    @GetMapping("/{bookId}")
-    public ResponseEntity<?> getBookById(@PathVariable Long bookId) {
+    @GetMapping("book-details/{bookId}")
+    public ResponseEntity<?> getBookById(@PathVariable("bookId") Long bookId) {
         try {
-            bookService.getBookDetails(bookId);
-            return ResponseEntity.ok("Successful");
+            Book bookDetails = bookService.getBookDetails(bookId);
+            return new ResponseEntity<>(bookDetails, ResponseEntity.ok("Successful").getStatusCode());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

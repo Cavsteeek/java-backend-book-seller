@@ -38,9 +38,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void getBookDetails(Long id)
+    public Book getBookDetails(Long id)
     {
-        bookRepository.findById(id);
+        return bookRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Not Found"));
     }
 
     @Override

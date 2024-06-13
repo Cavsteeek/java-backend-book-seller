@@ -4,6 +4,7 @@ import com.cavsteek.bookseller.CustomResponse.UnauthorizedUserException;
 import com.cavsteek.bookseller.dto.PurchaseRequest;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.PurchaseHistory;
+import com.cavsteek.bookseller.model.Role;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.repository.PurchaseHistoryRepository;
@@ -27,7 +28,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        if (userId == 1) {
+        if (user.getRole().equals(Role.ADMIN)) {
             throw new UnauthorizedUserException("Unauthorized user");
         }
 
@@ -39,7 +40,6 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
         purchaseHistory.setPurchaseTime(LocalDateTime.now());
 
         return purchaseHistoryRepository.save(purchaseHistory);
-
     }
 
     @Override
