@@ -57,6 +57,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                                 .requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers(HttpMethod.PATCH,"/api/v1/user/**").hasAnyAuthority(Role.USER.name())
+                                .requestMatchers("/api/v1/user/wishlist/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
                                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.PATCH, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())

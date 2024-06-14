@@ -47,4 +47,6 @@ public class WishlistServiceImpl implements WishlistService {
     public void deletefromWishlist(Long id){
         wishlistRepository.deleteById(id);
     }
+    // implement method to make sure a wishlist with same userId and bookId are not created twice
 }
+

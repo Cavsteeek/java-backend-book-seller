@@ -29,16 +29,17 @@ public class WishlistController {
     @GetMapping("/get-wishlist")
     public ResponseEntity<?> getWishlist() {
         try {
-//            return new ResponseEntity<>(wishlistService.showWishlist(), HttpStatus.OK);
-            return new ResponseEntity<>(wishlistRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(wishlistService.showWishlist(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/delete-order/{id}")
+    @DeleteMapping("/delete-wish/{id}")
     public ResponseEntity<?> deleteWishlist(@PathVariable("id") Long id){
             try{
+                //either of the method works
+
 //                wishlistService.deletefromWishlist(id);
                 wishlistRepository.deleteById(id);
                 return ResponseEntity.ok("Deleted Successfully");
