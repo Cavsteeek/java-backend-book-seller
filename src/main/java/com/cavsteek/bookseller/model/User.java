@@ -57,7 +57,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<PurchaseHistory> purchaseHistories;
+    private List<Purchase> purchaseHistories;
 
 
     @Override

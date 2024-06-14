@@ -1,6 +1,5 @@
 package com.cavsteek.bookseller.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "purchase_history")
-public class PurchaseHistory {
+public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

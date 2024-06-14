@@ -1,0 +1,16 @@
+package com.cavsteek.bookseller.service;
+
+import com.cavsteek.bookseller.dto.PurchaseRequest;
+import com.cavsteek.bookseller.model.Purchase;
+
+import java.util.List;
+
+public interface PurchaseService {
+  /*  Purchase savePurchaseHistory(PurchaseResponse purchaseRequest);*/
+
+    Purchase savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest);
+
+    List<Purchase> getAllPurchases();
+
+    void deleteOrder(Long id);
+}
