@@ -1,7 +1,10 @@
 package com.cavsteek.bookseller.service.impl;
 
 import com.cavsteek.bookseller.CustomResponse.UnauthorizedUserException;
+import com.cavsteek.bookseller.dto.BookDTO;
 import com.cavsteek.bookseller.dto.PurchaseRequest;
+import com.cavsteek.bookseller.dto.PurchaseResponse;
+import com.cavsteek.bookseller.dto.UserDTO;
 import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.Purchase;
 import com.cavsteek.bookseller.model.Role;
@@ -24,9 +27,8 @@ public class PurchaseServiceImpl implements PurchaseService {
     private final UserRepository userRepository;
 
     @Override
-    public Purchase savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest) {
+    public PurchaseResponse savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
         if (user.getRole().equals(Role.ADMIN)) {
             throw new UnauthorizedUserException("Unauthorized user");
@@ -39,7 +41,21 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchase.setPrice(book.getPrice() * purchase.getQuantity());
         purchase.setPurchaseTime(LocalDateTime.now());
 
-        return purchaseRepository.save(purchase);
+        Purchase savedPurchase = purchaseRepository.save(purchase);
+
+        BookDTO bookDTO = BookDTO
+                .builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .description(book.getDescription())
+                .genre(book.getGenre())
+                .price(book.getPrice())
+                .build();
+
+        UserDTO userDTO = UserDTO
+                .builder()
+                .build();
     }
 
     @Override
@@ -51,5 +67,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     public void deleteOrder(Long id){
         purchaseRepository.deleteById(id);
     }
+
+    // Add patch the quantity of the book
 
 }
