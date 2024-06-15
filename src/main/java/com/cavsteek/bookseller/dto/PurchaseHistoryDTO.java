@@ -1,12 +1,9 @@
 package com.cavsteek.bookseller.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
-@Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PurchaseHistoryDTO {
     private Long id;
     private PurchaseResponse purchase;

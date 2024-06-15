@@ -1,6 +1,7 @@
 package com.cavsteek.bookseller.controller;
 
 import com.cavsteek.bookseller.dto.PurchaseRequest;
+import com.cavsteek.bookseller.dto.PurchaseResponse;
 import com.cavsteek.bookseller.model.Purchase;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.repository.UserRepository;
@@ -26,7 +27,7 @@ public class PurchaseController {
         Long loggedInUser = getAuthenticatedUserId();
         if (userId.equals(loggedInUser)) {
             try {
-                Purchase purchase = purchaseService.savePurchaseHistory(userId, bookId, purchaseRequest);
+                PurchaseResponse purchase = purchaseService.savePurchaseHistory(userId, bookId, purchaseRequest);
                 return new ResponseEntity<>(purchase, HttpStatus.CREATED);
 
             } catch (Exception e) {

@@ -47,24 +47,32 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .builder()
                 .id(book.getId())
                 .title(book.getTitle())
-                .author(book.getAuthor())
                 .description(book.getDescription())
                 .genre(book.getGenre())
+                .author(book.getAuthor())
                 .price(book.getPrice())
                 .build();
 
         UserDTO userDTO = UserDTO
                 .builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .username(user.getUsername())
                 .build();
+
+        return new PurchaseResponse(savedPurchase.getId(), savedPurchase.getQuantity(), savedPurchase.getPrice(), bookDTO, userDTO);
     }
 
     @Override
     public List<Purchase> getAllPurchases() {
+
         return purchaseRepository.findAll();
     }
 
     @Override
-    public void deleteOrder(Long id){
+    public void deleteOrder(Long id) {
         purchaseRepository.deleteById(id);
     }
 

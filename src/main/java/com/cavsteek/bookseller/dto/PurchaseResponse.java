@@ -11,9 +11,9 @@ import lombok.*;
 @NoArgsConstructor
 public class PurchaseResponse {
     private Long id;
-    private BookDTO book;
-    private Double price;
     private Integer quantity;
+    private Double price;
+    private BookDTO book;
     private UserDTO user;
 
 }
