@@ -8,7 +8,6 @@ import lombok.*;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 public class PurchaseResponse {
     private Long id;
     private Integer quantity;

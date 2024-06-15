@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,9 +67,43 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> getAllPurchases() {
+    public List<PurchaseResponse> getAllPurchases() {
+        List<Purchase> purchases = purchaseRepository.findAll();
+        List<PurchaseResponse> purchaseResponses = new ArrayList<>();
 
-        return purchaseRepository.findAll();
+        for (Purchase purchase : purchases) {
+            BookDTO bookDTO = BookDTO.builder()
+                    .id(purchase.getBook().getId())
+                    .title(purchase.getBook().getTitle())
+                    .description(purchase.getBook().getDescription())
+                    .genre(purchase.getBook().getGenre())
+                    .author(purchase.getBook().getAuthor())
+                    .price(purchase.getBook().getPrice())
+                    .build();
+
+            // Create a UserDTO from the Purchase entity's User
+            UserDTO userDTO = UserDTO.builder()
+                    .id(purchase.getUser().getId())
+                    .firstName(purchase.getUser().getFirstName())
+                    .lastName(purchase.getUser().getLastName())
+                    .email(purchase.getUser().getEmail())
+                    .username(purchase.getUser().getUsername())
+                    .build();
+
+            // Create and return a PurchaseResponse
+            PurchaseResponse purchaseResponse = PurchaseResponse
+                    .builder()
+                    .id(purchase.getId())
+                    .quantity(purchase.getQuantity())
+                    .price(purchase.getPrice())
+                    .book(bookDTO)
+                    .user(userDTO)
+                    .build();
+
+            purchaseResponses.add(purchaseResponse);
+        }
+
+        return purchaseResponses;
     }
 
     @Override

@@ -1,13 +1,14 @@
 package com.cavsteek.bookseller.dto;
 
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class BookDTO {
     private Long id;
     private String title;

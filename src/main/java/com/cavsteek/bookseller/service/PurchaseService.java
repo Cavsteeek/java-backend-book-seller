@@ -11,7 +11,7 @@ public interface PurchaseService {
 
     PurchaseResponse savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest);
 
-    List<Purchase> getAllPurchases();
+    List<PurchaseResponse> getAllPurchases();
 
     void deleteOrder(Long id);
 }
