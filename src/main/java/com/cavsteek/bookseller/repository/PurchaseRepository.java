@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, Long>
 {
-    boolean existsByTitleAndAuthorAndUser(String title, String author, Long userId);
+    boolean existsByBook_TitleAndBook_AuthorAndUser_Id(String title, String author, Long userId);
 }

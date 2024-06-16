@@ -76,7 +76,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public boolean existsInCart(String title, String author, Long userId){
-        return purchaseRepository.existsByTitleAndAuthorAndUser(title, author, userId);
+        return purchaseRepository.existsByBook_TitleAndBook_AuthorAndUser_Id(title, author, userId);
     }
     // Add patch the quantity of the book
 

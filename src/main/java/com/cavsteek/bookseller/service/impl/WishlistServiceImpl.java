@@ -49,7 +49,7 @@ public class WishlistServiceImpl implements WishlistService {
     }
     @Override
     public boolean existsInCart(String title, String author, Long userId){
-        return wishlistRepository.existsByTitleAndAuthorAndUser(title, author, userId);
+        return wishlistRepository.existsByBook_TitleAndBook_AuthorAndUser_Id(title, author, userId);
     }
     // implement method to make sure a wishlist with same userId and bookId are not created twice
 }
