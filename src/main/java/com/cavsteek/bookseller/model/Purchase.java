@@ -21,9 +21,6 @@ public class Purchase {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "purchase_time", nullable = false)
-    private LocalDateTime purchaseTime;
-
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
@@ -31,9 +28,5 @@ public class Purchase {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<PurchaseHistory> purchaseHistories;
 
 }

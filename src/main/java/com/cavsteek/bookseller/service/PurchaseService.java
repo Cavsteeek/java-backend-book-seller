@@ -9,7 +9,7 @@ import java.util.List;
 public interface PurchaseService {
   /*  Purchase savePurchaseHistory(PurchaseResponse purchaseRequest);*/
 
-    PurchaseResponse savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest);
+    PurchaseResponse savePurchase(Long userId, Long bookId, PurchaseRequest purchaseRequest);
 
     List<Purchase> getAllPurchases();
 

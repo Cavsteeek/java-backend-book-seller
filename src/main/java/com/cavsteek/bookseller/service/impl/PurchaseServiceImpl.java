@@ -27,7 +27,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     private final UserRepository userRepository;
 
     @Override
-    public PurchaseResponse savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest) {
+    public PurchaseResponse savePurchase(Long userId, Long bookId, PurchaseRequest purchaseRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
         if (user.getRole().equals(Role.ADMIN)) {
@@ -39,7 +39,6 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchase.setBook(book);
         purchase.setQuantity(purchaseRequest.getQuantity());
         purchase.setPrice(book.getPrice() * purchaseRequest.getQuantity());
-        purchase.setPurchaseTime(LocalDateTime.now());
 
         Purchase savedPurchase = purchaseRepository.save(purchase);
 

@@ -35,7 +35,7 @@ public class PurchaseController {
                 if(purchaseService.existsInCart(book.getTitle(), book.getAuthor(), userId)){
                     return ResponseEntity.badRequest().body("Book with these Details already exists");
                 }
-                PurchaseResponse purchase = purchaseService.savePurchaseHistory(userId, bookId, purchaseRequest);
+                PurchaseResponse purchase = purchaseService.savePurchase(userId, bookId, purchaseRequest);
                 return new ResponseEntity<>(purchase, HttpStatus.CREATED);
 
             } catch (Exception e) {

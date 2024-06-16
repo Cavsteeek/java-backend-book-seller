@@ -17,10 +17,10 @@ public class PurchaseHistoryController {
     private final PurchaseHistoryService purchaseHistoryService;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
 
-    @PostMapping("/create/{purchaseId}")
-    public ResponseEntity<?> createPurchaseHistory(@PathVariable("purchaseId") Long purchaseId) {
+    @PostMapping("/create/{userId}/{bookId}/{purchaseId}")
+    public ResponseEntity<?> createPurchaseHistory(@PathVariable("userId") Long userId, @PathVariable("bookId") Long bookId, @PathVariable("purchaseId") Long purchaseId) {
         try {
-            PurchaseHistoryDTO purchaseHistory = purchaseHistoryService.savePurchaseHistory(purchaseId);
+            PurchaseHistoryDTO purchaseHistory = purchaseHistoryService.savePurchaseHistory(userId, bookId, purchaseId);
             return new ResponseEntity<>(purchaseHistory, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
