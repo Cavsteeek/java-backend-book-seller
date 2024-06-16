@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,6 +27,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -44,19 +46,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-//                .cors(AbstractHttpConfigurer::disable)
-//                .cors(c -> c.configurationSource(request -> {
-//                    CorsConfiguration config = new CorsConfiguration();
-//                    config.setAllowedOrigins(Arrays.asList("https://cavsteek-s.vercel.app", "http://localhost:8081"));
-//                    config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
-//                    config.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
-//                    return config;
-//                }))
+                .cors(c -> c.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(Arrays.asList("https://cavsteek-s.vercel.app", "http://localhost:8081"));
+                    config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+                    config.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
+                    config.setAllowCredentials(true);
+                    config.addExposedHeader("Authorization");
+                    return config;
+                }))
                 .authorizeHttpRequests(request -> request
                                 .requestMatchers(HttpMethod.GET, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                                 .requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers(HttpMethod.PATCH,"/api/v1/user/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers(HttpMethod.PATCH, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/user/wishlist/**").hasAnyAuthority("ROLE_USER")
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/user/wishlist/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
@@ -66,7 +70,6 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/purchases/create/**").hasAnyAuthority(Role.USER.name())
                                 .requestMatchers("/api/v1/purchases/all-purchases").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                                 .requestMatchers("/api/v1/purchases/delete-order/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
-//                        .requestMatchers(HttpMethod.GET,"/api/v1/purchase-history/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
