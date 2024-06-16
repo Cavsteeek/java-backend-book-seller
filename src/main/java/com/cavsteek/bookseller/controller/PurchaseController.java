@@ -2,8 +2,10 @@ package com.cavsteek.bookseller.controller;
 
 import com.cavsteek.bookseller.dto.PurchaseRequest;
 import com.cavsteek.bookseller.dto.PurchaseResponse;
+import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.Purchase;
 import com.cavsteek.bookseller.model.User;
+import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.repository.UserRepository;
 import com.cavsteek.bookseller.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +23,18 @@ import org.springframework.web.bind.annotation.*;
 public class PurchaseController {
     private final PurchaseService purchaseService;
     private final UserRepository userRepository;
+    private final BookRepository bookRepository;
 
     @PostMapping("/create/{userId}/{bookId}") // For Users
     public ResponseEntity<?> createPurchase(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody PurchaseRequest purchaseRequest) {
         Long loggedInUser = getAuthenticatedUserId();
         if (userId.equals(loggedInUser)) {
             try {
+                Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+
+                if(purchaseService.existsInCart(book.getTitle(), book.getAuthor(), userId)){
+                    return ResponseEntity.badRequest().body("Book with these Details already exists");
+                }
                 PurchaseResponse purchase = purchaseService.savePurchaseHistory(userId, bookId, purchaseRequest);
                 return new ResponseEntity<>(purchase, HttpStatus.CREATED);
 

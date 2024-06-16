@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
+    boolean existsByTitleAndAuthorAndUser(String title, String author, Long userId);
 }

@@ -1,7 +1,9 @@
 package com.cavsteek.bookseller.controller;
 
+import com.cavsteek.bookseller.model.Book;
 import com.cavsteek.bookseller.model.User;
 import com.cavsteek.bookseller.model.Wishlist;
+import com.cavsteek.bookseller.repository.BookRepository;
 import com.cavsteek.bookseller.repository.UserRepository;
 import com.cavsteek.bookseller.repository.WishlistRepository;
 import com.cavsteek.bookseller.service.WishlistService;
@@ -21,13 +23,17 @@ public class WishlistController {
     private final WishlistService wishlistService;
     private final WishlistRepository wishlistRepository;
     private final UserRepository userRepository;
+    private final BookRepository bookRepository;
 
     @PostMapping("/create/{userId}/{bookId}")
     public ResponseEntity<?> createWishlist(@PathVariable("userId") Long userId, @PathVariable("bookId") Long bookId) {
         Long loggedInUser = getAuthenticatedUserId();
         if (userId.equals(loggedInUser)) {
             try {
-
+                Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+                if(wishlistService.existsInCart(book.getTitle(), book.getAuthor(), userId)){
+                    return ResponseEntity.badRequest().body("Book with these Details already exists");
+                }
                 Wishlist wishlist = wishlistService.createWishlist(userId, bookId);
                 return new ResponseEntity<>(wishlist, HttpStatus.CREATED);
             } catch (Exception e) {

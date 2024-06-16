@@ -9,4 +9,6 @@ public interface WishlistService {
     List<Wishlist> showWishlist();
 
     void deletefromWishlist(Long id);
+
+    boolean existsInCart(String title, String author, Long userId);
 }

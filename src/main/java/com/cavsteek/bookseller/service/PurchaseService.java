@@ -11,7 +11,9 @@ public interface PurchaseService {
 
     PurchaseResponse savePurchaseHistory(Long userId, Long bookId, PurchaseRequest purchaseRequest);
 
-    List<PurchaseResponse> getAllPurchases();
+    List<Purchase> getAllPurchases();
 
     void deleteOrder(Long id);
+
+    boolean existsInCart(String title, String author, Long userId);
 }
