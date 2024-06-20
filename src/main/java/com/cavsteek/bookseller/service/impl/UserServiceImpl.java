@@ -78,6 +78,12 @@ public class UserServiceImpl implements UserService {
                     if (userPatch.getLastName() != null) {
                         existingUser.setLastName(userPatch.getLastName());
                     }
+                    if(userPatch.getShippingAddress() != null){
+                        existingUser.setShippingAddress(userPatch.getShippingAddress());
+                    }
+                    if(userPatch.getPaymentMethod() != null){
+                        existingUser.setPaymentMethod(userPatch.getPaymentMethod());
+                    }
                     return userRepository.save(existingUser);
                 })
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));

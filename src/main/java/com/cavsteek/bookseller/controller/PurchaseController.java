@@ -33,7 +33,7 @@ public class PurchaseController {
                 Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
 
                 if(purchaseService.existsInCart(book.getTitle(), book.getAuthor(), userId)){
-                    return ResponseEntity.badRequest().body("Book with these Details already exists");
+                    return ResponseEntity.badRequest().body("Item with these Details already exists");
                 }
                 PurchaseResponse purchase = purchaseService.savePurchase(userId, bookId, purchaseRequest);
                 return new ResponseEntity<>(purchase, HttpStatus.CREATED);

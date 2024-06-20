@@ -32,7 +32,7 @@ public class WishlistController {
             try {
                 Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
                 if(wishlistService.existsInCart(book.getTitle(), book.getAuthor(), userId)){
-                    return ResponseEntity.badRequest().body("Book with these Details already exists");
+                    return ResponseEntity.badRequest().body("Item with these Details already exists");
                 }
                 Wishlist wishlist = wishlistService.createWishlist(userId, bookId);
                 return new ResponseEntity<>(wishlist, HttpStatus.CREATED);

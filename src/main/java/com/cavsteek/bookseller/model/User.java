@@ -48,6 +48,12 @@ public class User implements UserDetails {
     @Column(name = "lastName", nullable = false, length = 100)
     private String lastName;
 
+    @Column(name = "shipping_address", nullable = true, length = 500)
+    private String shippingAddress;
+
+    @Column(name = "payment_method", nullable = true , length = 20)
+    private String paymentMethod;
+
     @Column(name = "create_time", nullable = false)
     private LocalDateTime createTime;
 

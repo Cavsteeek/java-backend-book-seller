@@ -46,32 +46,32 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(c -> c.configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList("https://cavsteek-s.vercel.app", "http://localhost:8081"));
-                    config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
-                    config.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
-                    config.setAllowCredentials(true);
-                    config.addExposedHeader("Authorization");
-                    return config;
-                }))
+                /* .cors(c -> c.configurationSource(request -> {
+                     CorsConfiguration config = new CorsConfiguration();
+                     config.setAllowedOrigins(Arrays.asList("https://cavsteek-s.vercel.app", "http://localhost:8081"));
+                     config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+                     config.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
+                     config.setAllowCredentials(true);
+                     config.addExposedHeader("Authorization");
+                     return config;
+                 }))*/
                 .authorizeHttpRequests(request -> request
-                                .requestMatchers(HttpMethod.GET, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
-                                .requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAnyAuthority(Role.USER.name())
-                                .requestMatchers(HttpMethod.PATCH,"/api/v1/user/**").hasAnyAuthority(Role.USER.name())
-                                .requestMatchers(HttpMethod.PATCH, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/user/wishlist/**").hasAnyAuthority("ROLE_USER")
-                                .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/user/wishlist/**").hasAnyAuthority(Role.USER.name())
-                                .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
-                                .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
-                                .requestMatchers("/api/v1/purchase-history").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
-                                .requestMatchers("/api/v1/purchase-history/create/**").hasAnyAuthority(Role.USER.name())
-                                .requestMatchers("/api/v1/purchases/create/**").hasAnyAuthority(Role.USER.name())
-                                .requestMatchers("/api/v1/purchases/all-purchases").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
-                                .requestMatchers("/api/v1/purchases/delete-order/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
-                                .anyRequest()
-                                .authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/user/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers("/api/v1/user/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/user/wishlist/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers("/api/v1/book/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers("/api/v1/purchase-history").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/api/v1/purchase-history/create/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers("/api/v1/purchases/create/**").hasAnyAuthority(Role.USER.name())
+                        .requestMatchers("/api/v1/purchases/all-purchases").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/api/v1/purchases/delete-order/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                        .anyRequest()
+                        .authenticated()
                 )
                 /*.oauth2Login(oauth2 -> oauth2
                         .loginPage("/api/v1/auth/login")

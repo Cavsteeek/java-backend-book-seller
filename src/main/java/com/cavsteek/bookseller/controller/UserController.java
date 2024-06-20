@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,6 +32,11 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
+    @GetMapping("/all-users")
+    public ResponseEntity<?> getAllUsers() {
+        List<User> userList = userService.findUsersByRole();
+        return ResponseEntity.ok(userList);
+    }
     @GetMapping
     public ResponseEntity<String> sayHello() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -40,7 +46,13 @@ public class UserController {
 
     @PatchMapping("/edit-profile/{userId}")
     // implement if userId != token.userId then throw error
-    public ResponseEntity<?> editUserProfileById(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "email", required = false) String email, @RequestParam(value = "firstName", required = false) String firstName, @RequestParam(value = "lastName", required = false) String lastName, @PathVariable("userId") Long userId) {
+    public ResponseEntity<?> editUserProfileById(@RequestParam(value = "username", required = false) String username,
+                                                 @RequestParam(value = "email", required = false) String email,
+                                                 @RequestParam(value = "firstName", required = false) String firstName,
+                                                 @RequestParam(value = "lastName", required = false) String lastName,
+                                                 @RequestParam(value = "shippingAddress", required = false) String shippingAddress,
+                                                 @RequestParam(value = "paymentMethod", required = false) String paymentMethod,
+                                                 @PathVariable("userId") Long userId) {
         Long loggedInUser = getAuthenticatedUserId();
         if (userId.equals(loggedInUser)) {
             try {
@@ -56,6 +68,12 @@ public class UserController {
                 }
                 if (lastName != null) {
                     userPatch.setLastName(lastName);
+                }
+                if(shippingAddress != null){
+                    userPatch.setShippingAddress(shippingAddress);
+                }
+                if(paymentMethod != null){
+                    userPatch.setPaymentMethod(paymentMethod);
                 }
 
                 User updatedUser = userService.patchUser(userId, userPatch);
