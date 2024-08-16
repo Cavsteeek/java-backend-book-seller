@@ -56,8 +56,6 @@ public class WishlistController {
     @DeleteMapping("/delete-wish/{id}")
     public ResponseEntity<?> deleteWishlist(@PathVariable("id") Long id) {
         try {
-            //either of the method works
-
 //                wishlistService.deletefromWishlist(id);
             wishlistRepository.deleteById(id);
             return ResponseEntity.ok("Deleted Successfully");

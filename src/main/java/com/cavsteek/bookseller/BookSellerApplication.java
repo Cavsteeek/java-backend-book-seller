@@ -28,7 +28,6 @@ public class BookSellerApplication implements CommandLineRunner {
 	}
 
 
-
 	@Override
 	public void run(String... args) throws Exception {
 		User adminAccount = userRepository.findByRole(Role.ADMIN);
